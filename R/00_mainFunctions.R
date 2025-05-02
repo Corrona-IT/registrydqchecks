@@ -35,15 +35,30 @@ runRegistryChecks <- function(.registry = "defaultRegistry"
                               ,.outputUrl
                               ,.isR){
   
+
+  
+  ###############
+  #Check parameters
+  paramCheck(.registry = .registry
+             ,.prelimDataFolderUrl = .prelimDataFolderUrl
+             ,.lastMonthDataFolderUrl = .lastMonthDataFolderUrl
+             ,.codebookUrl = .codebookUrl
+             ,.siteInfoUrl = .siteInfoUrl
+             ,.cdmRomReportUrl = .cdmRomReportUrl
+             ,.outputUrl = .outputUrl)
+
   ############################
   # Initialize variable lists to house information on specific datasets being checked
+  .codebooks <- list()
+  .dataToCheck <- list()
+  .dataToCompare <- list()
+  .essentialVariables <- list()
+  .codebookVariables <- list()
+  .uniqueKeys <- list()
   .critCheckOutput <- list()
   .codebookNcOutput <- list()
   .nonCritCheckOutput <- list()
   .ncChecks <- list()
-  
-  validateCodebook(codebookUrl = .codebookUrl
-                    ,datasetNames = .datasetsToCheck)
   
   .activeSites <- pullSiteInfoFromExcelFile(.fileUrl = .siteInfoUrl
                                          ,.registry = .registry)
@@ -51,47 +66,48 @@ runRegistryChecks <- function(.registry = "defaultRegistry"
   # Loop through each dataset and perform the checks
   for(.dsName in .datasetsToCheck){
     # Pull dataset specific codebook
-    .codebooks <- pullCodebookFromExcelFile(.fileUrl = .codebookUrl
+    .codebooks[[.dsName]] <- pullCodebookFromExcelFile(.fileUrl = .codebookUrl
                                                        ,.sheetName = .dsName)
     
     # Pull the unique keys for the specific dataset from the codebook
-    .uniqueKeys <- .codebooks |>
+    .uniqueKeys[[.dsName]] <- .codebooks[[.dsName]] |>
       dplyr::filter(uniqueKey == 1) |>
       dplyr::select(varName)
     
     # Pull data to check and data from last month to compare it to
-    .dataToCheck <- pullData(.datasetUrl = glue::glue("{.prelimDataFolderUrl}{.dsName}_{.prelimDataPullDate}")
-                                        ,.isR)
+    .dataToCheck[[.dsName]] <- pullData(.datasetUrl = glue::glue("{.prelimDataFolderUrl}{.dsName}_{.prelimDataPullDate}")
+                                        ,.isR) |>
+      cleanUniqueKeyClasses(uniqueKeyVars = .uniqueKeys[[.dsName]])
     
-    .dataToCompare <- pullData(.datasetUrl = glue::glue("{.lastMonthDataFolderUrl}{.dsName}_{.lastMonthDataPullDate}")
-                                          ,.isR)
-
+    .dataToCompare[[.dsName]] <- pullData(.datasetUrl = glue::glue("{.lastMonthDataFolderUrl}{.dsName}_{.lastMonthDataPullDate}")
+                                          ,.isR) |>
+      cleanUniqueKeyClasses(uniqueKeyVars = .uniqueKeys[[.dsName]])
     
     # Pull the list of essential variables for the specific dataset from the codebook
-    .essentialVariables <- .codebooks |>
+    .essentialVariables[[.dsName]] <- .codebooks[[.dsName]] |>
       dplyr::filter(essential == 1) |>
       dplyr::select(varName, acceptableMissingness, nonExtremeMissingness, missingnessThresholdMultiplier, skipLogic)
     
     # Pull the codebook noncritical check variables for the specific dataset from the codebook
-    .codebookVariables <- .codebooks |>
+    .codebookVariables[[.dsName]] <- .codebooks[[.dsName]] |>
       dplyr::select(varName, varLabel, essential, calculatedVariable, acceptableMissingness, missingnessThresholdMultiplier, skipLogic, catValues, numRange)
     
     # Run the critical checks on the specific dataset with information pulled from the codebook
-    .critCheckOutput[[.dsName]] <- criticalChecks(.dsToCheck = data.frame(.dataToCheck)
-                                                  ,.compDsToCheck = data.frame(.dataToCompare)
-                                                  ,.listOfEssentialVars = .essentialVariables
-                                                  ,.listOfSupposedVars = names(.dataToCompare)
-                                                  ,.uniqueKeys = .uniqueKeys$varName
-                                                  ,.codebookVariables = .codebookVariables
+    .critCheckOutput[[.dsName]] <- criticalChecks(.dsToCheck = data.frame(.dataToCheck[[.dsName]])
+                                                  ,.compDsToCheck = data.frame(.dataToCompare[[.dsName]])
+                                                  ,.listOfEssentialVars = .essentialVariables[[.dsName]]
+                                                  ,.listOfSupposedVars = names(.dataToCompare[[.dsName]])
+                                                  ,.uniqueKeys = .uniqueKeys[[.dsName]]$varName
+                                                  ,.codebookVariables = .codebookVariables[[.dsName]]
                                                   ,.dsName = .dsName
                                                   )
     
     # Run the codebook noncritical checks on the specific dataset with information pulled from the codebook
     .codebookNcOutput[[.dsName]] <- codebookNcChecks(.dsName = .dsName
-                                                     ,.dsToCheck = data.frame(.dataToCheck)
-                                                     ,.compDsToCheck = data.frame(.dataToCompare)
-                                                     ,.codebookVariables = .codebookVariables
-                                                     ,.uniqueKeys = .uniqueKeys$varName
+                                                     ,.dsToCheck = data.frame(.dataToCheck[[.dsName]])
+                                                     ,.compDsToCheck = data.frame(.dataToCompare[[.dsName]])
+                                                     ,.codebookVariables = .codebookVariables[[.dsName]]
+                                                     ,.uniqueKeys = .uniqueKeys[[.dsName]]$varName
                                                      )
     
     # Add codebook noncritical checks to the noncritical check output
@@ -107,7 +123,7 @@ runRegistryChecks <- function(.registry = "defaultRegistry"
     }
   }
   
-  rm(.codebooks, .essentialVariables, .codebookVariables, .dataToCheck, .uniqueKeys, .dataToCompare)
+  rm(.dataToCheck, .dataToCompare)
 
   
   # Create a list of the critical check and the noncritical check output to be saved to a location  
@@ -131,12 +147,7 @@ runRegistryChecks <- function(.registry = "defaultRegistry"
                     ,.dataStoreUrl = .outputUrl
                     ,.resultsOfChecks = .checkOutput
                     ,.activeSites = .activeSites
-                    ,.dataFolderUrl = .prelimDataFolderUrl
-                    ,.lastMonthDataFolderUrl = .lastMonthDataFolderUrl
-                    ,.cdmRomReportUrl = .cdmRomReportUrl
-                    ,.lastMonthDataPullDate = .lastMonthDataPullDate
                     )
-  
   rm(.checkOutput)
   # Generate the html report
   registrydqchecksreportdown::generateReport(
