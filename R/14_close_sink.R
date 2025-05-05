@@ -8,6 +8,8 @@
 #'
 close_sink <- function(registry_abbrev, output_location){
   sink()
+  closeAllConnections()
+  
   file.copy(from = "console_output.txt", 
             to = glue("{output_location}{registry_abbrev}_console_output.txt"))
   file.remove("console_output.txt")
