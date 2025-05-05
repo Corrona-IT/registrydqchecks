@@ -6,7 +6,7 @@
 open_sink <- function(){
   
   # Close sink file if it is open 
-  closeAllConnections()
+  sink()
   
   sink("console_output.txt", split = TRUE)
   sink(stdout(), type = c("output", "message"), split = TRUE)
