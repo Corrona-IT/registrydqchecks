@@ -1,40 +1,15 @@
-
-
-
-
-
 #' Parameter Checks
 #'
-#' @param .registry 
-#' @param .prelimDataFolderUrl 
-#' @param .lastMonthDataFolderUrl 
-#' @param .codebookUrl 
-#' @param .siteInfoUrl 
-#' @param .cdmRomReportUrl 
-#' @param .outputUrl 
+#' @param .registry The registry abbreviation
+#' @param .prelimDataFolderUrl The folder URL of the data
+#' @param .lastMonthDataFolderUrl The folder URL of last month's data
+#' @param .codebookUrl The URL to the codebook
+#' @param .siteInfoUrl The URL to the site_info_clean.csv file
+#' @param .cdmRomReportUrl The CDM/ROM report URL
+#' @param .outputUrl The output URL
 #'
 #' @return Print message that all parameters pass
 #' @export
-#'
-#' @examples
-#' 
-#' .registry = "ra"
-#' .prelimDataFolderUrl = "C:/Users/olsonr/PPD (CRG)/Biostat Data Files - RA/DQ checks/Data/2025/2025-04-01/"
-#' .lastMonthDataFolderUrl = "C:/Users/olsonr/PPD (CRG)/Biostat Data Files - RA/DQ checks/Data/2025/2025-03-01/"
-#' .codebookUrl = "C:/Users/olsonr/PPD (CRG)/Biostat Data Files - RA/DQ checks/Documentations/RA_codebook_2025-04-01.xlsx"
-#' .siteInfoUrl = "C:/Users/olsonr/PPD (CRG)/Biostat Data Files - Site and Provider Data/data/site_data_clean.csv"
-#' .cdmRomReportUrl = "C:/Users/olsonr/PPD (CRG)/Core_Biostat and Epi Team Site - Documents/Biostat Registry Data Quality Reports"
-#' .outputUrl = "C:/Users/olsonr/Documents/Scrap/ra/2025/2025-04/"
-#' 
-#' paramCheck(.registry = .registry
-#' ,.prelimDataFolderUrl = .prelimDataFolderUrl
-#' ,.lastMonthDataFolderUrl = .lastMonthDataFolderUrl
-#' ,.codebookUrl = .codebookUrl
-#' ,.siteInfoUrl = .siteInfoUrl
-#' ,.cdmRomReportUrl = .cdmRomReportUrl
-#' ,.outputUrl = .outputUrl)
-
-
 
 paramCheck <- function(.registry
                        ,.prelimDataFolderUrl
@@ -79,11 +54,11 @@ paramCheck <- function(.registry
     stop(".cdmRomReportUrl does not exist")
   }
   
-  # Check if the output directory exists
-  output_dir_exists <- dir.exists(.outputUrl)
-  if (!output_dir_exists) {
-    stop(".outputUrl does not exist")
-  }
+  # # Check if the output directory exists
+  # output_dir_exists <- dir.exists(.outputUrl)
+  # if (!output_dir_exists) {
+  #   stop(".outputUrl does not exist")
+  # }
   
   # If all checks pass, proceed with the rest of the function
   return("All parameter checks pass. Proceeding with the rest of the function.")

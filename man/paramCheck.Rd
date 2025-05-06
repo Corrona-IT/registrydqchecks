@@ -15,41 +15,23 @@ paramCheck(
 )
 }
 \arguments{
-\item{.registry}{}
+\item{.registry}{The registry abbreviation}
 
-\item{.prelimDataFolderUrl}{}
+\item{.prelimDataFolderUrl}{The folder URL of the data}
 
-\item{.lastMonthDataFolderUrl}{}
+\item{.lastMonthDataFolderUrl}{The folder URL of last month's data}
 
-\item{.codebookUrl}{}
+\item{.codebookUrl}{The URL to the codebook}
 
-\item{.siteInfoUrl}{}
+\item{.siteInfoUrl}{The URL to the site_info_clean.csv file}
 
-\item{.cdmRomReportUrl}{}
+\item{.cdmRomReportUrl}{The CDM/ROM report URL}
 
-\item{.outputUrl}{}
+\item{.outputUrl}{The output URL}
 }
 \value{
 Print message that all parameters pass
 }
 \description{
 Parameter Checks
-}
-\examples{
-
-.registry = "ra"
-.prelimDataFolderUrl = "C:/Users/olsonr/PPD (CRG)/Biostat Data Files - RA/DQ checks/Data/2025/2025-04-01/"
-.lastMonthDataFolderUrl = "C:/Users/olsonr/PPD (CRG)/Biostat Data Files - RA/DQ checks/Data/2025/2025-03-01/"
-.codebookUrl = "C:/Users/olsonr/PPD (CRG)/Biostat Data Files - RA/DQ checks/Documentations/RA_codebook_2025-04-01.xlsx"
-.siteInfoUrl = "C:/Users/olsonr/PPD (CRG)/Biostat Data Files - Site and Provider Data/data/site_data_clean.csv"
-.cdmRomReportUrl = "C:/Users/olsonr/PPD (CRG)/Core_Biostat and Epi Team Site - Documents/Biostat Registry Data Quality Reports"
-.outputUrl = "C:/Users/olsonr/Documents/Scrap/ra/2025/2025-04/"
-
-paramCheck(.registry = .registry
-,.prelimDataFolderUrl = .prelimDataFolderUrl
-,.lastMonthDataFolderUrl = .lastMonthDataFolderUrl
-,.codebookUrl = .codebookUrl
-,.siteInfoUrl = .siteInfoUrl
-,.cdmRomReportUrl = .cdmRomReportUrl
-,.outputUrl = .outputUrl)
 }

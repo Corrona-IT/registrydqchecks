@@ -1,13 +1,15 @@
+# remotes::install_github("corrona-it/registrydqchecksreportdown@develop")
+# 
 # # Choose from aa, ad, gpp, ibd, ms, nmo, psa, pso, ra, raj
-# .registryAbbreviation <- "ra"
+# .registryAbbreviation <- "ad"
 # 
 # .dataPullYear <- "2025"
-# .dataPullFolderDate <- "2025-02-01"
-# .dataPullDate <- "2025-02-01"
+# .dataPullFolderDate <- "2025-04-02"
+# .dataPullDate <- "2025-04-02"
 # 
 # .lastMonthDataPullYear <- "2025"
-# .lastMonthDataPullFolderDate <- "2025-01-01"
-# .lastMonthDataPullDate <- "2025-01-01"
+# .lastMonthDataPullFolderDate <- "2025-03-05"
+# .lastMonthDataPullDate <- "2025-03-05"
 # 
 # source("config.R")
 # 
