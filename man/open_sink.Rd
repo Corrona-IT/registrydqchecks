@@ -7,7 +7,7 @@
 open_sink()
 }
 \value{
-a txt file named console_output.txt
+the temporary log file to be copied at the end of the script
 }
 \description{
 open sink txt file to store console output in the console_output.txt

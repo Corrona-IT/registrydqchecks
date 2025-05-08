@@ -6,11 +6,11 @@
 #' @returns saved console_output.txt file in the output location folder
 #' @export
 #'
-close_sink <- function(registry_abbrev, output_location){
+close_sink <- function(temp_log_file, registry_abbrev, output_location){
   sink()
   closeAllConnections()
   
-  file.copy(from = "console_output.txt", 
-            to = glue("{output_location}{registry_abbrev}_console_output.txt"))
-  file.remove("console_output.txt")
+  final_log_file <- file.path(output_location, glue::glue("{registry_abbrev}_console_output.txt"))
+  file.copy(temp_log_file, final_log_file, overwrite = TRUE)
+  file.remove(temp_log_file)
 }
