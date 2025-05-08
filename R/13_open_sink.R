@@ -9,7 +9,9 @@ open_sink <- function(){
   sink()
   closeAllConnections()
   
-  sink("console_output.txt", split = TRUE)
+  temp_log_file = tempfile()
+  sink(temp_log_file)
+
   sink(stdout(), type = c("output", "message"), split = TRUE)
   sink(stderr(), type = c("output", "message"), split = TRUE)
 }
