@@ -239,7 +239,7 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
 
           # .subsetTimeDataset <- .checksToOutput$nonCriticalChecks[[.dsName]]$nPctList[[.ncCheckName]]$listing
           
-          bg_color_style <- createStyle(fgFill = "#F2DCDB")  # Reddish background
+          bg_color_style <- createStyle(fgFill = "#F2DCDB", border = "TopBottomLeftRight", borderColour = "#D3D3D3")  # Reddish background
           
           if(nrow(.subsetSiteDataset) > 0){
             openxlsx::writeData(.wbLong, "qualityChecks", .ncCheckName, startCol = 8, startRow = currentRow)
