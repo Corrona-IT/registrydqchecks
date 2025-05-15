@@ -251,7 +251,7 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
             openxlsx::addStyle(.wbLong, "qualityChecks", style = topBorderStyle, rows = currentRow, cols = 1:30)
             
             if(.checksToOutput$nonCriticalChecks[[.dsName]]$nPctList[[.ncCheckName]]$highPriority){
-              openxlsx::addStyle(.wbLong, sheet = "qualityChecks", style = bg_color_style, rows = currentRow:(currentRow + nrow(.subsetSiteDataset)), cols = 1:30, gridExpand = TRUE)  
+              openxlsx::addStyle(.wbLong, sheet = "qualityChecks", style = bg_color_style, rows = currentRow:(currentRow + nrow(.subsetSiteDataset)), cols = 1:30, gridExpand = TRUE, stack = TRUE)  
             }
             
             openxlsx::writeData(.wbLong, "qualityChecks", .subsetSiteDataset, startCol = 7, startRow = currentRow)
