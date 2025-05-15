@@ -239,7 +239,7 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
 
           # .subsetTimeDataset <- .checksToOutput$nonCriticalChecks[[.dsName]]$nPctList[[.ncCheckName]]$listing
           
-          bg_color_style <- createStyle(fgFill = "#FFFF00")  # Yellow background
+          bg_color_style <- createStyle(fgFill = "#F2DCDB")  # Reddish background
           
           if(nrow(.subsetSiteDataset) > 0){
             openxlsx::writeData(.wbLong, "qualityChecks", .ncCheckName, startCol = 8, startRow = currentRow)
@@ -250,7 +250,7 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
             currentRow <- currentRow + 1
             openxlsx::addStyle(.wbLong, "qualityChecks", style = topBorderStyle, rows = currentRow, cols = 1:30)
             
-            if(.checksToOutput$nonCriticalChecks[[.dsName]]$nPctList[[.ncCheckName]]$sendCheckToRom){
+            if(.checksToOutput$nonCriticalChecks[[.dsName]]$nPctList[[.ncCheckName]]$highPriority){
               openxlsx::addStyle(.wbLong, sheet = "qualityChecks", style = bg_color_style, rows = currentRow:(currentRow + nrow(.subsetSiteDataset)), cols = 1:30, gridExpand = TRUE)  
             }
             
