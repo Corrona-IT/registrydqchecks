@@ -42,6 +42,15 @@ runRegistryChecks <- function(.registry = "defaultRegistry"
   .nonCritCheckOutput <- list()
   .ncChecks <- list()
   
+  # Define timestamp of this specific datapull
+  .timestamp <- format(Sys.time(), "%Y-%m-%d_%H%M")
+  .formattedTimestamp <- gsub('[^A-Za-z0-9_]', '_', .timestamp)
+  .yearMonthTimestamp = format(as.Date(.prelimDataPullDate), "%Y-%m")
+  .folderName = glue::glue("{.registry}_{.yearMonthTimestamp}_DQReport_{.timestamp}")
+  .reportOutputUrl = glue::glue("{.outputUrl}{.folderName}/")
+  
+  createDataStoreFolder(.reportOutputUrl)
+  
   validateCodebook(codebookUrl = .codebookUrl
                     ,datasetNames = .datasetsToCheck)
   
@@ -86,6 +95,17 @@ runRegistryChecks <- function(.registry = "defaultRegistry"
                                                   ,.dsName = .dsName
                                                   )
     
+    # Run data_changes report
+    data_changes_report <- data_changes(
+      curr_dataset = .dataToCheck
+      ,comp_dataset = .dataToCompare
+      ,by_vars = .uniqueKeys
+      ,output_folder = .reportOutputUrl
+      ,output_filename = glue::glue("{.dsName}_data_comparison.xlsx"
+                                    ,title_pagename = .dsName))
+    
+
+    
     # Run the codebook noncritical checks on the specific dataset with information pulled from the codebook
     .codebookNcOutput[[.dsName]] <- codebookNcChecks(.dsName = .dsName
                                                      ,.dsToCheck = data.frame(.dataToCheck)
@@ -116,12 +136,6 @@ runRegistryChecks <- function(.registry = "defaultRegistry"
     ,"nonCriticalCheckOutput" = .ncChecks
   )
 
-  # Define timestamp of this specific datapull
-  .timestamp <- format(Sys.time(), "%Y-%m-%d_%H%M")
-  .formattedTimestamp <- gsub('[^A-Za-z0-9_]', '_', .timestamp)
-  .yearMonthTimestamp = format(as.Date(.prelimDataPullDate), "%Y-%m")
-  .folderName = glue::glue("{.registry}_{.yearMonthTimestamp}_DQReport_{.timestamp}")
-  .reportOutputUrl = glue::glue("{.outputUrl}{.folderName}/")
 
   # Submit check results to datastore - including a .rds and Excel files
   submitToDataStore(.registry = .registry
