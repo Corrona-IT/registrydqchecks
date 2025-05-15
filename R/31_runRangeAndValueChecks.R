@@ -37,6 +37,7 @@ runRangeAndValueChecks <- function(.dsName
     ,"checkDescription" = "Confirm that values fall within a prespecified range (for continuous variables) or within a prespecified list of values (for discrete variables)."
     ,"checkShortDescription" = "numeric and categorical value checks"
     ,"sendCheckToRom" = TRUE
+    ,"highPriority" = FALSE
     ,"pass" = ifelse(nrow(.ncCheck1Output) > 0, FALSE, TRUE)
     ,"values" = list(
       "n" = nrow(.ncCheck1Output)
