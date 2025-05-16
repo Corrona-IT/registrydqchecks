@@ -35,15 +35,33 @@ runRegistryChecks <- function(.registry = "defaultRegistry"
                               ,.outputUrl
                               ,.isR){
   
+
+  
+  ###############
+  #Check parameters
+  paramCheck(.registry = .registry
+             ,.prelimDataFolderUrl = .prelimDataFolderUrl
+             ,.lastMonthDataFolderUrl = .lastMonthDataFolderUrl
+             ,.codebookUrl = .codebookUrl
+             ,.siteInfoUrl = .siteInfoUrl
+             ,.cdmRomReportUrl = .cdmRomReportUrl
+             ,.outputUrl = .outputUrl)
+
   ############################
   # Initialize variable lists to house information on specific datasets being checked
+  .codebooks <- list()
+  .dataToCheck <- list()
+  .dataToCompare <- list()
+  .essentialVariables <- list()
+  .codebookVariables <- list()
+  .uniqueKeys <- list()
   .critCheckOutput <- list()
   .codebookNcOutput <- list()
   .nonCritCheckOutput <- list()
   .ncChecks <- list()
   
   validateCodebook(codebookUrl = .codebookUrl
-                    ,datasetNames = .datasetsToCheck)
+                   ,datasetNames = .datasetsToCheck)
   
   .activeSites <- pullSiteInfoFromExcelFile(.fileUrl = .siteInfoUrl
                                          ,.registry = .registry)
@@ -61,11 +79,12 @@ runRegistryChecks <- function(.registry = "defaultRegistry"
     
     # Pull data to check and data from last month to compare it to
     .dataToCheck <- pullData(.datasetUrl = glue::glue("{.prelimDataFolderUrl}{.dsName}_{.prelimDataPullDate}")
-                                        ,.isR)
+                                        ,.isR) |>
+      cleanUniqueKeyClasses(uniqueKeyVars = .uniqueKeys)
     
     .dataToCompare <- pullData(.datasetUrl = glue::glue("{.lastMonthDataFolderUrl}{.dsName}_{.lastMonthDataPullDate}")
-                                          ,.isR)
-
+                                          ,.isR) |>
+      cleanUniqueKeyClasses(uniqueKeyVars = .uniqueKeys)
     
     # Pull the list of essential variables for the specific dataset from the codebook
     .essentialVariables <- .codebooks |>
@@ -131,10 +150,11 @@ runRegistryChecks <- function(.registry = "defaultRegistry"
                     ,.dataStoreUrl = .outputUrl
                     ,.resultsOfChecks = .checkOutput
                     ,.activeSites = .activeSites
+                    ,.dataFolderUrl = .prelimDataFolderUrl
+                    ,.lastMonthDataFolderUrl = .lastMonthDataFolderUrl
                     ,.cdmRomReportUrl = .cdmRomReportUrl
                     ,.lastMonthDataPullDate = .lastMonthDataPullDate
                     )
-  
   rm(.checkOutput)
   # Generate the html report
   registrydqchecksreportdown::generateReport(
