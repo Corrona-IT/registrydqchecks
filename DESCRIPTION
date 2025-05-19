@@ -26,3 +26,5 @@ Imports:
     ,tibble
     ,utils
     ,magrittr
+    ,huxtable
+    ,arsenal
