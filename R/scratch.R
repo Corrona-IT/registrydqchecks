@@ -1,3 +1,5 @@
+# remotes::install_github("corrona-it/registrydqchecksreportdown@develop")
+# 
 # # Choose from aa, ad, gpp, ibd, ms, nmo, psa, pso, ra, raj
 # .registryAbbreviation <- "ibd"
 # 

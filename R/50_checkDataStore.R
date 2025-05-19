@@ -5,6 +5,8 @@
 #' @param .dataStoreUrl A text url of the location where the check results will be stored
 #' @param .resultsOfChecks A list with the results of the data checks
 #' @param .activeSites Information on the list of active sites for this registry
+#' @param .dataFolderUrl Folder URL of the current month dataset
+#' @param .lastMonthDataFolderUrl Folder URL of the last month dataset
 #' @param .timestamp Timestamp that the checks were run
 #' @param .folderName Name for the folder where results will be output
 #' @param .cdmRomReportUrl (FOLDER URL) A url string to the location of the base CDM/ROM Report folder
@@ -18,6 +20,8 @@ submitToDataStore <- function(.registry
                               ,.dataStoreUrl
                               ,.resultsOfChecks
                               ,.activeSites
+                              ,.dataFolderUrl
+                              ,.lastMonthDataFolderUrl
                               ,.cdmRomReportUrl
                               ,.lastMonthDataPullDate
                               ){
@@ -39,6 +43,8 @@ submitToDataStore <- function(.registry
     ,"user" = Sys.info()[["user"]]
     ,"folderLoc" = .dataStoreUrl
     ,"pullDate" = .dsPullDate
+    ,"dataFolderUrl" = .dataFolderUrl
+    ,"lastMonthDataFolderUrl" = .lastMonthDataFolderUrl
   )
   
   # Generate a summary of the check results to output with the check results

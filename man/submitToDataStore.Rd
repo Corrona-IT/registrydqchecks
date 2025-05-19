@@ -12,6 +12,8 @@ submitToDataStore(
   .dataStoreUrl,
   .resultsOfChecks,
   .activeSites,
+  .dataFolderUrl,
+  .lastMonthDataFolderUrl,
   .cdmRomReportUrl,
   .lastMonthDataPullDate
 )
@@ -30,6 +32,10 @@ submitToDataStore(
 \item{.resultsOfChecks}{A list with the results of the data checks}
 
 \item{.activeSites}{Information on the list of active sites for this registry}
+
+\item{.dataFolderUrl}{Folder URL of the current month dataset}
+
+\item{.lastMonthDataFolderUrl}{Folder URL of the last month dataset}
 
 \item{.cdmRomReportUrl}{(FOLDER URL) A url string to the location of the base CDM/ROM Report folder}
 
