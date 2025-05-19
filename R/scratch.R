@@ -1,4 +1,4 @@
-# # # Choose from aa, ad, gpp, ibd, ms, nmo, psa, pso, ra, raj
+# # Choose from aa, ad, gpp, ibd, ms, nmo, psa, pso, ra, raj
 # .registryAbbreviation <- "ibd"
 # 
 # .dataPullYear <- "2025"
@@ -29,9 +29,25 @@
 #                   ,.nonCriticalChecks = NULL
 #                   ,.outputUrl = glue::glue("{.reportOutputUrl}/{.registryAbbreviation}/{.dataPullYear}/{.dataPullDate}/")
 #                   ,.isR = .testIsR[[.registryAbbreviation]])
-
-# copyRomListingToFolder(.reportOutputUrl = outputUrl
-#                        ,.romReportUrl = .exampleRomOutputFolder
-#                        ,.registry = .registryAbbreviation
-#                        ,.dataPullDate = .dataPullDate
-#                        ,.overwrite = FALSE)
+# 
+# 
+# .registry = .registryAbbreviation
+# .prelimDataFolderUrl = .testDataFolderUrl[[.registryAbbreviation]]
+# .prelimDataPullDate = .dataPullDate
+# .lastMonthDataFolderUrl = .testLastMonthDataFolderUrl[[.registryAbbreviation]]
+# .lastMonthDataPullDate = .lastMonthDataPullDate
+# .codebookUrl = .testCodebookUrl[[.registryAbbreviation]]
+# .siteInfoUrl = .configSiteInfoUrl
+# .cdmRomReportUrl = .exampleRomOutputFolder
+# .datasetsToCheck = .testDataSetsToCheck[[.registryAbbreviation]]
+# .nonCriticalChecks = NULL
+# .outputUrl = glue::glue("{.reportOutputUrl}/{.registryAbbreviation}/{.dataPullYear}/{.dataPullDate}/")
+# .isR = .testIsR[[.registryAbbreviation]]
+# 
+# .dsName = "IBD_Analytic_file"
+# 
+# # copyRomListingToFolder(.reportOutputUrl = outputUrl
+# #                        ,.romReportUrl = .exampleRomOutputFolder
+# #                        ,.registry = .registryAbbreviation
+# #                        ,.dataPullDate = .dataPullDate
+# #                        ,.overwrite = FALSE)

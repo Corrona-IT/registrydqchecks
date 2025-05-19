@@ -18,6 +18,7 @@
 #' @import lubridate
 #' @import openxlsx
 #' @importFrom arsenal comparedf
+#' @importFrom magrittr %>%
 data_changes <- function(curr_dataset, comp_dataset, by_vars, output_folder, output_filename, title_pagename) {
   
   
@@ -145,7 +146,7 @@ data_changes <- function(curr_dataset, comp_dataset, by_vars, output_folder, out
     table_specs <- obs.ns
     new_codebook <- as_Workbook(ht = table_specs, Workbook = new_codebook, sheet = sheet_name)
     openxlsx::setColWidths(new_codebook, sheet = sheet_name, cols = 1:ncol(table_specs), widths = rep(20, times = ncol(table_specs)))
-    
+
     sheet_name <- "Detailed Comparison"
     table_specs <- diffs
     new_codebook <- as_Workbook(ht = table_specs, Workbook = new_codebook, sheet = sheet_name)
