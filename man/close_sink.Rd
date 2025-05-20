@@ -4,7 +4,7 @@
 \alias{close_sink}
 \title{close sink file}
 \usage{
-close_sink(registry_abbrev, output_location)
+close_sink(temp_log_file, registry_abbrev, output_location)
 }
 \arguments{
 \item{registry_abbrev}{registry abbreviation (ie. "aa")}

@@ -1,15 +1,15 @@
-# remotes::install_github("corrona-it/registrydqchecksreportdown@develop")
+# # remotes::install_github("corrona-it/registrydqchecksreportdown@develop")
 # 
 # # Choose from aa, ad, gpp, ibd, ms, nmo, psa, pso, ra, raj
-# .registryAbbreviation <- "ibd"
+# .registryAbbreviation <- "ad"
 # 
 # .dataPullYear <- "2025"
-# .dataPullFolderDate <- "2025-05-01"
-# .dataPullDate <- "2025-05-01"
+# .dataPullFolderDate <- "2025-05-02"
+# .dataPullDate <- "2025-05-02"
 # 
 # .lastMonthDataPullYear <- "2025"
-# .lastMonthDataPullFolderDate <- "2025-04-01"
-# .lastMonthDataPullDate <- "2025-04-01"
+# .lastMonthDataPullFolderDate <- "2025-04-02"
+# .lastMonthDataPullDate <- "2025-04-02"
 # 
 # source("config.R")
 # 
@@ -46,7 +46,7 @@
 # .outputUrl = glue::glue("{.reportOutputUrl}/{.registryAbbreviation}/{.dataPullYear}/{.dataPullDate}/")
 # .isR = .testIsR[[.registryAbbreviation]]
 # 
-# .dsName = "IBD_Analytic_file"
+# .dsName = "exlab"
 # 
 # # copyRomListingToFolder(.reportOutputUrl = outputUrl
 # #                        ,.romReportUrl = .exampleRomOutputFolder
