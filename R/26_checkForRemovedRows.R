@@ -15,7 +15,7 @@ checkForRemovedRows <- function(.dsToCheck,.compDsToCheck,.uniqueKey){
   
   .tempDsToCheck <- .dsToCheck |>
     cleanUniqueKeyClasses(uniqueKeyVars = list(.uniqueKeys))
-  .tempCompDsToCheck <- .dsToCheck |>
+  .tempCompDsToCheck <- .compDsToCheck |>
     cleanUniqueKeyClasses(uniqueKeyVars = list(.uniqueKeys))
 
   # Create dataframe of rows in .compDsToCheck and not in .dsToCheck
