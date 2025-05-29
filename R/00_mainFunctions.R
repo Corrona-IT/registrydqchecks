@@ -95,14 +95,14 @@ runRegistryChecks <- function(.registry = "defaultRegistry"
                                           ,.isR) |>
       cleanUniqueKeyClasses(uniqueKeyVars = .uniqueKeys)
 
-    # Run data_changes report
-    data_changes_report <- data_changes(
-      curr_dataset = .dataToCheck
-      ,comp_dataset = .dataToCompare
-      ,by_vars = .uniqueKeys |> dplyr::pull()
-      ,output_folder = .reportOutputUrl
-      ,output_filename = glue::glue("{.dsName}_data_comparison.xlsx")
-      ,title_pagename = .dsName)
+    # # Run data_changes report
+    # data_changes_report <- data_changes(
+    #   curr_dataset = .dataToCheck
+    #   ,comp_dataset = .dataToCompare
+    #   ,by_vars = .uniqueKeys |> dplyr::pull()
+    #   ,output_folder = .reportOutputUrl
+    #   ,output_filename = glue::glue("{.dsName}_data_comparison.xlsx")
+    #   ,title_pagename = .dsName)
     
     # Pull the list of essential variables for the specific dataset from the codebook
     .essentialVariables <- .codebooks |>

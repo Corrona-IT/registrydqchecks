@@ -28,3 +28,4 @@ Imports:
     ,magrittr
     ,huxtable
     ,arsenal
+    ,rlang

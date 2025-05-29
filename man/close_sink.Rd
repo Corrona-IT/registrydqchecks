@@ -7,6 +7,8 @@
 close_sink(temp_log_file, registry_abbrev, output_location)
 }
 \arguments{
+\item{temp_log_file}{The temporary log file to print out to the output location}
+
 \item{registry_abbrev}{registry abbreviation (ie. "aa")}
 
 \item{output_location}{report output location (ie. reportLocationUrl)}

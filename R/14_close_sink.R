@@ -2,6 +2,7 @@
 #'
 #' @param registry_abbrev registry abbreviation (ie. "aa")
 #' @param output_location report output location (ie. reportLocationUrl)
+#' @param temp_log_file The temporary log file to print out to the output location
 #'
 #' @returns saved console_output.txt file in the output location folder
 #' @export
