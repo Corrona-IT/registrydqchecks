@@ -23,7 +23,7 @@ criticalChecks <- function(.dsToCheck
   .critCheckResults3 <- checkForExtraVariables(.dsToCheck,.listOfSupposedVars)
   .critCheckResults4 <- checkForMissingVariableLabels(.dsToCheck)
   .critCheckResults5 <- checkForAddedRows(.dsToCheck,.compDsToCheck)
-  .critCheckResults6 <- checkForRemovedRows(.dsToCheck,.compDsToCheck,.uniqueKeys)
+  .critCheckResults6 <- checkForRemovedRows(.dsToCheck = .dsToCheck,.compDsToCheck = .compDsToCheck,.uniqueKey = .uniqueKeys)
 
   # Checks if a codebook exists and if not then does not run CC 7 and 8
   if(length(.listOfEssentialVars) > 0){
