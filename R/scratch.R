@@ -4,8 +4,8 @@
 # .registryAbbreviation <- "ad"
 # 
 # .dataPullYear <- "2025"
-# .dataPullFolderDate <- "2025-05-02"
-# .dataPullDate <- "2025-05-02"
+# .dataPullFolderDate <- "2025-04-22"
+# .dataPullDate <- "2025-04-22"
 # 
 # .lastMonthDataPullYear <- "2025"
 # .lastMonthDataPullFolderDate <- "2025-04-02"

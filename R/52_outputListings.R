@@ -155,6 +155,24 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
   
   # Save the .xlsx listings of codebook checks
 
+  for(.dsName in names(.checksToOutput$criticalChecks)){
+    if(nrow(.checksToOutput$criticalChecks[[.dsName]]$criticalCheck10$listing) > 0){
+      .checkName = .checksToOutput$criticalChecks[[.dsName]]$criticalCheck10$checkId
+      .checkDsName = glue::glue("{.checksToOutput$criticalChecks[[.dsName]]$criticalCheck10$checkId}_{.dsName}")
+      openxlsx::writeData(.wbLong, "qualityChecks", c(.checkDsName), startCol = 8, startRow = currentRow)
+      currentRow <- currentRow + 1
+      openxlsx::writeData(.wbLong, "qualityChecks", .checksToOutput$criticalChecks[[.dsName]]$criticalCheck10$checkTitle, startCol = 8, startRow = currentRow)
+      currentRow <- currentRow + 1
+      openxlsx::writeData(.wbLong, "qualityChecks", .checksToOutput$criticalChecks[[.dsName]]$criticalCheck10$checkDescription, startCol = 8, startRow = currentRow)
+      currentRow <- currentRow + 1
+      openxlsx::addStyle(.wbLong, "qualityChecks", style = topBorderStyle, rows = currentRow, cols = 1:30)
+      openxlsx::writeData(.wbLong, "qualityChecks", .checksToOutput$criticalChecks[[.dsName]]$criticalCheck10$listing, startCol = 7, startRow = currentRow)
+      currentRow <- currentRow + 1
+      openxlsx::addStyle(.wbLong, "qualityChecks", style = bottomBorderStyle, rows = currentRow + nrow(.checksToOutput$criticalChecks[[.dsName]]$criticalCheck10$listing), cols = 1:30)
+      currentRow <- currentRow + nrow(.checksToOutput$criticalChecks[[.dsName]]$criticalCheck10$listing) + 2
+    }
+  }
+  
   for(.ncCheckName in names(.checksToOutput$nonCriticalChecks[[.dsName]]$codebookChecks)){
     .wb <- openxlsx::createWorkbook()
     for(.dsName in names(.checksToOutput$nonCriticalChecks)){
