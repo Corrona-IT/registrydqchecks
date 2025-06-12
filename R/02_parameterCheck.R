@@ -19,7 +19,7 @@ paramCheck <- function(.registry
                        ,.cdmRomReportUrl
                        ,.outputUrl) {
   # Check if .registry is one of the valid values
-  is_registry <- .registry %in% c("ad", "ms", "ra", "raj", "aa", "pso", "ibd", "nmo","gpp")
+  is_registry <- .registry %in% c("ad", "ms", "ra", "raj", "aa", "pso", "ibd", "nmo","gpp", "psa", "ada")
   if (!is_registry) {
     stop(".registry is not a valid registry")
   }
