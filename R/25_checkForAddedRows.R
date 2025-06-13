@@ -22,7 +22,7 @@ checkForAddedRows <- function(.dsToCheck,.compDsToCheck){
     ,"nAddedRows" = nrow(.dsToCheck) - nrow(.compDsToCheck)
     ,"nOldRows" = nrow(.compDsToCheck)
     ,"propRowIncrease" = round((nrow(.dsToCheck) - nrow(.compDsToCheck)) / nrow(.compDsToCheck), digits = 3)
-    ,"pctRowIncrease" = 100 * round((nrow(.dsToCheck) - nrow(.compDsToCheck)) / nrow(.compDsToCheck), digits = 3)
+    ,"pctRowIncrease" = sprintf('%.2f%%',100 * round((nrow(.dsToCheck) - nrow(.compDsToCheck)) / nrow(.compDsToCheck), digits = 3))
   )
   
   return(.returnOutput)
