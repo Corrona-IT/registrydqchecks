@@ -37,6 +37,8 @@ checkForRemovedRows <- function(.dsToCheck,.compDsToCheck,.uniqueKey){
     ,"threshold" = sprintf("%.2f%%",.threshold)
     ,"pass" = ifelse(.pctRemoved > 0.02, FALSE, TRUE)
     ,"nRemovedRows" = glue::glue("{nrow(.inOldAndNotInNew)} ({sprintf('%.2f%%',.pctRemoved*100)})")
+    ,"nRowsThisMonth" = nrow(.dsToCheck)
+    ,"nOldRows" = nrow(.compDsToCheck)
     ,"inOldAndNotInNew" = as.data.frame(.inOldAndNotInNew[,.uniqueKeys])
   )
 

@@ -20,6 +20,7 @@ checkForAddedRows <- function(.dsToCheck,.compDsToCheck){
     ,"threshold" = sprintf('%.2f%%',.threshold)
     ,"pass" = ifelse((nrow(.dsToCheck) - nrow(.compDsToCheck)) / nrow(.compDsToCheck) < .threshold / 100,TRUE,FALSE)
     ,"nAddedRows" = nrow(.dsToCheck) - nrow(.compDsToCheck)
+    ,"nRowsThisMonth" = nrow(.dsToCheck)
     ,"nOldRows" = nrow(.compDsToCheck)
     ,"propRowIncrease" = round((nrow(.dsToCheck) - nrow(.compDsToCheck)) / nrow(.compDsToCheck), digits = 3)
     ,"pctRowIncrease" = sprintf('%.2f%%',100 * round((nrow(.dsToCheck) - nrow(.compDsToCheck)) / nrow(.compDsToCheck), digits = 3))
