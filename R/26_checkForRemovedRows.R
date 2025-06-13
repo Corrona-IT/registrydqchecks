@@ -24,15 +24,17 @@ checkForRemovedRows <- function(.dsToCheck,.compDsToCheck,.uniqueKey){
   rm(.tempDsToCheck, .tempCompDsToCheck)
   
   .pctRemoved <- nrow(.inOldAndNotInNew) / nrow(.compDsToCheck)
+  
+  .threshold <- 2
 
   # Define output list structure
   .returnOutput <- list(
     "checkId" = "cc6"
     ,"checkTitle" = "Reasonable volume of disappearing rows"
-    ,"checkDescription" = "For each analytic file, confirm that the volume of disappearing rows is below a prespecified threshold. (0)"
+    ,"checkDescription" = glue::glue("For each analytic file, confirm that the volume of disappearing rows is below a prespecified threshold. ({sprintf('%.2f%%',.threshold)})")
     ,"checkShortDescription" = "removed rows"
     ,"sendCheckToRom" = FALSE
-    ,"threshold" = sprintf("%.2f%%",2)
+    ,"threshold" = sprintf("%.2f%%",.threshold)
     ,"pass" = ifelse(.pctRemoved > 0.02, FALSE, TRUE)
     ,"nRemovedRows" = glue::glue("{nrow(.inOldAndNotInNew)} ({sprintf('%.2f%%',.pctRemoved*100)})")
     ,"inOldAndNotInNew" = as.data.frame(.inOldAndNotInNew[,.uniqueKeys])
