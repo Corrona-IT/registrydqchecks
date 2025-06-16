@@ -8,7 +8,7 @@
 pullRDSfromUrl <- function(.datasetUrl){
   
   # Print url where the dataset is pulled from
-  print(.datasetUrl)
+  print(glue::glue("Dataset located at: {.datasetUrl}"))
   
   # Read in the R dataset file
   .ds <- readRDS(.datasetUrl)
