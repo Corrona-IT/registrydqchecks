@@ -5,6 +5,8 @@
 #' @returns A dataframe of the file being pulled
 #'
 #' @export
+#' 
+#' @importFrom glue glue
 pullRDSfromUrl <- function(.datasetUrl){
   
   # Print url where the dataset is pulled from
