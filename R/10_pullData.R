@@ -18,6 +18,7 @@ pullData <- function(.datasetUrl,.isR = TRUE){
   {
     .pulledDataset <- pullDTAfromUrl(.datasetUrl = glue::glue("{.datasetUrl}.dta"))
   }
+  print("Dataset read in successfully!")
 
   return(.pulledDataset);
 }

@@ -1,3 +1,37 @@
+# **2025-06-16 Update**
+
+**Feature Additions**
+- Add [data_changes](https://github.com/Corrona-IT/registrydqchecks/blob/main/R/03_data_changes.R) as an exported function to be used ad hoc. This function takes in 2 datasets and does a complete comparison on them - outputting an Excel file. Decision was made not to include this in the runRegistryChecks function by default due to large datasets taking a lot of time to run. However - you can use this as an exported function on an as-needed basis.
+- Add priority flag functionality to NC checks. When a NC check is indicated to be "high priority" - the CDM/ROM Excel output will be highlighted in a light red - drawing attention to the check as a "priority" item.
+- Add additional log comments for reading in datasets to declare what the printed out URL means and whether the dataset readin was successful
+
+
+**Report Updates**
+- Add code to include standardized lab values and standardized lab units in the HTML report while continuing to exclude them from the CDM/ROM report.
+- Updated HTML report formatting
+  -  Add bold to check information and results headers
+  -  Add subtle delimiter between critical check results
+  -  Add "Send check to CDM/ROM" indicator to check information for all checks
+- Add % units to CC5 and CC6 output
+- Add Number of Current Rows and Number of Old Rows to CC5 and CC6 results output
+
+
+**Registry-Specific Updates**
+- All Registries
+  - Added a priority flag variable to ALL noncritical checks to be used in highlighting CDM/ROM report priority checks
+  - Add standardized lab values and standardized lab units to all applicable lab check results listings to be included in HTML report. This was added in for all applicable registries.
+  - NC21 Revamp - Removed unused columns and made overall table easier to read
+    - Removed Init and Prev columns
+    - Sort by countTotDiff
+- PSO
+  - Add code for NC21
+- NMO
+  - Add code for NC21
+- IBD
+  - Add IBD_drug_summary to output
+  - Add code for NC21
+  - Add code for NC33
+
 # **2025-05-20 Update**
 
 **Bug fixes**
