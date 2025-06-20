@@ -7,10 +7,11 @@
 #' @export
 #' 
 #' @importFrom haven read_dta
+#' @importFrom glue glue
 pullDTAfromUrl <- function(.datasetUrl){
   
   # Print url where the dataset is pulled from
-  print(.datasetUrl)
+  print(glue::glue("Dataset located at: {.datasetUrl}"))
   
   # Read in the Stata file
   .ds <- haven::read_dta(.datasetUrl)
