@@ -85,6 +85,7 @@ runReasonableMissingnessCheck <- function(.dsToCheck, .codebookVariables){
     ,"checkDescription" = "Confirm that item nonresponse for nonessential variables is below a specified threshold."
     ,"checkShortDescription" = "nonessential item missingness"
     ,"sendCheckToRom" = FALSE
+    ,"highPriority" = FALSE
     ,"pass" = ifelse(nrow(.listOfVarMissingness) > 0, FALSE, TRUE)
     ,"values" = list(
       "n" = nrow(.listOfVarMissingness)

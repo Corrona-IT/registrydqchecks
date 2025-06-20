@@ -235,9 +235,13 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
             ,.siteVar1 = "site_id"
             ,.siteVar2 = "siteid"
             ,.activeSites = .activeSites
-          )
+          ) %>%
+            # Remove standardized lab values
+            dplyr::select(-any_of(c("StdLabResult", "StdLabUnits")))
 
           # .subsetTimeDataset <- .checksToOutput$nonCriticalChecks[[.dsName]]$nPctList[[.ncCheckName]]$listing
+          
+          bg_color_style <- openxlsx::createStyle(fgFill = "#F2DCDB", border = c("bottom", "left", "right"), borderColour = "#D3D3D3")  # Reddish background
           
           if(nrow(.subsetSiteDataset) > 0){
             openxlsx::writeData(.wbLong, "qualityChecks", .ncCheckName, startCol = 8, startRow = currentRow)
@@ -247,6 +251,11 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
             openxlsx::writeData(.wbLong, "qualityChecks", .checksToOutput$nonCriticalChecks[[.dsName]]$nPctList[[.ncCheckName]]$checkDescription, startCol = 8, startRow = currentRow)
             currentRow <- currentRow + 1
             openxlsx::addStyle(.wbLong, "qualityChecks", style = topBorderStyle, rows = currentRow, cols = 1:30)
+            
+            if(.checksToOutput$nonCriticalChecks[[.dsName]]$nPctList[[.ncCheckName]]$highPriority){
+              openxlsx::addStyle(.wbLong, sheet = "qualityChecks", style = bg_color_style, rows = currentRow:(currentRow + nrow(.subsetSiteDataset)), cols = 1:30, gridExpand = TRUE, stack = TRUE)  
+            }
+            
             openxlsx::writeData(.wbLong, "qualityChecks", .subsetSiteDataset, startCol = 7, startRow = currentRow)
             currentRow <- currentRow + 1
             openxlsx::addStyle(.wbLong, "qualityChecks", style = bottomBorderStyle, rows = currentRow + nrow(.subsetSiteDataset), cols = 1:30)
@@ -270,51 +279,6 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
     type = "list", 
     value = "'supporting_details'!$A$1:$A$3" # Reference the range in the dropdown sheet
   )
-
-  # Define the valid date range as Date objects
-  # start_date <- as.Date("2025-01-01")
-  # end_date <- as.Date("2030-12-31")
-  # openxlsx::dataValidation(
-  #   .wbLong,
-  #   sheet = "qualityChecks",
-  #   cols = 2, # Column number of "Due Date"
-  #   rows = 2:currentRow, # Rows to apply the validation (header excluded)
-  #   type = "date",
-  #   operator = "between", # Restrict dates within a range
-  #   value = c(start_date, end_date), # Date range for validation
-  #   allowBlank = TRUE
-  # )
-  # openxlsx::dataValidation(
-  #   .wbLong,
-  #   sheet = "qualityChecks",
-  #   cols = 4, # Column number of "Resolution Date"
-  #   rows = 2:currentRow, # Rows to apply the validation (header excluded)
-  #   type = "date",
-  #   operator = "between", # Restrict dates within a range
-  #   value = c(start_date, end_date), # Date range for validation
-  #   allowBlank = TRUE
-  # )
-  # 
-  # date_style <- openxlsx::createStyle(numFmt = "yyyy/mm/dd") # Set format to YYYY/MM/DD
-  # openxlsx::addStyle(
-  #   .wbLong,
-  #   sheet = "qualityChecks",
-  #   style = date_style,
-  #   cols = 2,
-  #   rows = 2:currentRow,
-  #   gridExpand = TRUE,
-  #   stack = TRUE
-  # )
-  # openxlsx::addStyle(
-  #   .wbLong,
-  #   sheet = "qualityChecks",
-  #   style = date_style,
-  #   cols = 4,
-  #   rows = 2:currentRow,
-  #   gridExpand = TRUE,
-  #   stack = TRUE
-  # )
-  
 
   
   .columnTitles <- as.data.frame(t(c("Investigator", "Date Investigated", "Resolution", "Date Resolved", "Notes")))
