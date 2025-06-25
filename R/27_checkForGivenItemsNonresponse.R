@@ -20,7 +20,14 @@ checkForGivenItemsNonresponse <- function(.dsToCheck, .listOfEssentialVars){
     ,"missingnessThresholdMultiplier" = numeric()
     ,"skipLogic" = character()
   )
-
+  
+  
+  .listOfObsMissingVars <- data.frame(
+    "subject_id" = character() 
+    ,"varName" = character()
+    , stringsAsFactors = FALSE)
+  
+  
   # Loop through the given variables and add a row to the dataframe
   for(.var in .listOfEssentialVars$varName){
     
@@ -32,12 +39,17 @@ checkForGivenItemsNonresponse <- function(.dsToCheck, .listOfEssentialVars){
         .nRows <- nrow(.dsToCheck)
         .nMissing <-
           sum(is.na(.dsToCheck[[.var]]))
+        # Identify rows with missing values
+        .missingRow <- .dsToCheck[is.na(.dsToCheck[[.var]]), ]
+        
       } else {
         .subsetDsToCheck <- .dsToCheck |>
           dplyr::filter(eval(parse(text = .currEssentialVariable$skipLogic)))
         .nRows <- nrow(.subsetDsToCheck)
         .nMissing <-
           sum(is.na(.subsetDsToCheck[[.var]]))
+        # Identify rows with missing values
+        .missingRow <- .subsetDsToCheck[is.na(.subsetDsToCheck[[.var]]), ]
       }
       
       .propMissing = round(.nMissing / .nRows, digits = 3)
@@ -46,12 +58,13 @@ checkForGivenItemsNonresponse <- function(.dsToCheck, .listOfEssentialVars){
       .nRows <- NA
       .nMissing <- NA
       .propMissing <- NA
+      .missingRows <- NA
       
       print(.var)
       print(paste0("Error occurred while evaluating expression: ", .currEssentialVariable$skipLogic))
     })
     
-    # Build the row to add to the dataframe
+    # Build the row to add to the html dataframe
     .varMissingRow <- data.frame(
       "varName" = .var
       ,"nMissingThisMonth" = .nMissing
@@ -65,8 +78,21 @@ checkForGivenItemsNonresponse <- function(.dsToCheck, .listOfEssentialVars){
       )
     
     .listOfVarMissingness <- dplyr::bind_rows(.listOfVarMissingness,.varMissingRow)
-  }
-  
+    
+    # Build the row to add to the observation level dataframe
+    
+    # Check if .missingRow is not empty before adding to .listOfObsMissingVars
+    if (nrow(.missingRow) > 0) {
+      .obsMissingRow <- data.frame(
+        "subject_id" = .missingRow[["subject_id"]],
+        "varName" = .var,
+        stringsAsFactors = FALSE
+      )
+      
+      .listOfObsMissingVars <- dplyr::bind_rows(.listOfObsMissingVars, .obsMissingRow)
+    }}
+
+
   # Reorder the listing output to be sorted in descending order by amount of missingness
   .listOfVarMissingness <- .listOfVarMissingness |>
     dplyr::arrange(dplyr::desc(propMissingThisMonth)) |>
@@ -84,6 +110,7 @@ checkForGivenItemsNonresponse <- function(.dsToCheck, .listOfEssentialVars){
     ,"sendCheckToRom" = FALSE
     ,"pass" = ifelse(nrow(.listOfVarMissingness) > 0, FALSE, TRUE)
     ,"essentialVariablesMissingness" = .listOfVarMissingness
+    ,"listOfObsMissingVars" = .listOfObsMissingVars
   )
   
   return(.returnOutput)

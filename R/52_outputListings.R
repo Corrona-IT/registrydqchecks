@@ -100,6 +100,13 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
                          ,file = glue::glue("{.listingUrl}/cc7 item missingness.xlsx")
                          ,overwrite = TRUE)
   
+  # Save the .xlsx listings of critical check 7 listOfObsMissingVars
+  .wb_obs <- openxlsx::createWorkbook()
+  for(.dsName in names(.checksToOutput$criticalChecks)){
+    openxlsx::addWorksheet(.wb_obs, sheetName = .dsName)
+    openxlsx::writeData(.wb_obs, sheet = .dsName, .checksToOutput$criticalChecks[[.dsName]]$criticalCheck7$listOfObsMissingVars)
+  }
+  openxlsx::saveWorkbook(.wb_obs, file = glue::glue("{.listingUrl}/cc7 observation level missingness.xlsx"), overwrite = TRUE)
   
   # Save the .xlsx listings of critical check 8
   .wb <- openxlsx::createWorkbook()
