@@ -84,7 +84,7 @@ checkForGivenItemsNonresponse <- function(.dsToCheck, .listOfEssentialVars){
     # Check if .missingRow is not empty before adding to .listOfObsMissingVars
     if (nrow(.missingRow) > 0) {
       .obsMissingRow <- data.frame(
-        "subject_id" = .missingRow[["subject_id"]],
+        "subject_id" =  .missingRow[[.listOfEssentialVars$varName[1]]],
         "varName" = .var,
         stringsAsFactors = FALSE
       )
