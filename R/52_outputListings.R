@@ -144,12 +144,14 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
   
   
   # Initialize long listing file
-  .wbLong <- openxlsx::createWorkbook()
+  # .wbLong <- openxlsx::createWorkbook()
+  template_path <- system.file("extdata", "README_template.xlsx", package = "registrydqchecks")
+  .wbLong <- openxlsx::loadWorkbook(template_path)
   openxlsx::addWorksheet(.wbLong, "qualityChecks")
   currentRow <- 2
   
   openxlsx::addWorksheet(.wbLong, "supporting_details")
-  dropdown_values <- data.frame(Status = c("Open", "Closed - action taken", "Closed - no action taken"))
+  dropdown_values <- data.frame(Status = c("Open", "Closed - action taken", "Closed - no action taken", "Not investigated"))
   openxlsx::writeData(.wbLong, "supporting_details", dropdown_values, colNames = FALSE)
   openxlsx::protectWorksheet(.wbLong, sheet = "supporting_details", protect = TRUE, lockFormattingCells = TRUE)
   
@@ -277,7 +279,7 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
     cols = 3, # Column number of "Resolution Status"
     rows = 2:currentRow, # Rows to apply the dropdown (header row excluded)
     type = "list", 
-    value = "'supporting_details'!$A$1:$A$3" # Reference the range in the dropdown sheet
+    value = "'supporting_details'!$A$1:$A$4" # Reference the range in the dropdown sheet
   )
 
   
@@ -290,13 +292,13 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
   openxlsx::setColWidths(.wbLong, sheet = "qualityChecks", cols = 7, widths = 0)
 
 
-  
-  
   openxlsx::saveWorkbook(.wbLong
                          ,file = glue::glue("{.listingUrl}/{.registry}_{.yearMonthTimestamp}_allDqChecks.xlsx")
                          ,overwrite = TRUE)
   
-  return(glue::glue("{.listingUrl}/{.registry}_{.yearMonthTimestamp}_allDqChecks.xlsx"))
+  
+  
+  return(glue::glue("{.listingUrl}/{.registry}_{.yearMonthTimestamp}_allDqChecks.xlsx", package = "registrydqchecks"))
 }
 
 
