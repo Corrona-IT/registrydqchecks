@@ -149,7 +149,7 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
   currentRow <- 2
   
   openxlsx::addWorksheet(.wbLong, "supporting_details")
-  dropdown_values <- data.frame(Status = c("Open", "Closed - action taken", "Closed - no action taken"))
+  dropdown_values <- data.frame(Status = c("Open", "Closed - action taken", "Closed - no action taken", "Not investigated"))
   openxlsx::writeData(.wbLong, "supporting_details", dropdown_values, colNames = FALSE)
   openxlsx::protectWorksheet(.wbLong, sheet = "supporting_details", protect = TRUE, lockFormattingCells = TRUE)
   
@@ -277,7 +277,7 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
     cols = 3, # Column number of "Resolution Status"
     rows = 2:currentRow, # Rows to apply the dropdown (header row excluded)
     type = "list", 
-    value = "'supporting_details'!$A$1:$A$3" # Reference the range in the dropdown sheet
+    value = "'supporting_details'!$A$1:$A$4" # Reference the range in the dropdown sheet
   )
 
   
