@@ -1,6 +1,6 @@
 # # remotes::install_github("corrona-it/registrydqchecksreportdown@develop")
 # 
-# # Open sink file to store console output 
+# # Open sink file to store console output
 # temp_log_file <- registrydqchecks::open_sink()
 # 
 # # Choose from aa, ad, gpp, ibd, ms, nmo, psa, pso, ra, raj
