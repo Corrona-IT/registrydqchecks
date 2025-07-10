@@ -4,7 +4,7 @@
 # temp_log_file <- registrydqchecks::open_sink()
 # 
 # # Choose from aa, ad, gpp, ibd, ms, nmo, psa, pso, ra, raj
-# .registryAbbreviation <- "nmo"
+# .registryAbbreviation <- "ibd"
 # 
 # .dataPullYear <- "2025"
 # .dataPullFolderDate <- "2025-07-01"
@@ -19,8 +19,8 @@
 # # validateCodebook(codebookUrl = .testCodebookUrl[[.registryAbbreviation]]
 # #                   ,datasetNames = .testDataSetsToCheck[[.registryAbbreviation]])
 # 
-# # checks <- readRDS("C:/Users/ScottKreider/Documents/scrap/exampleOutput/ad_2024-10-01_2024-10-16_1602_checks.rds")
-# # manualNcChecks <- checks$nonCriticalChecks
+# checks <- readRDS("C:/Users/scott.kreider/Documents/scrap/sample_dq_output/ibd_2025-07-01_2025-07-09_1329_checks.rds")
+# manualNcChecks <- checks$nonCriticalChecks
 # 
 # outputUrl <- runRegistryChecks(.registry = .registryAbbreviation
 #                   ,.prelimDataFolderUrl = .testDataFolderUrl[[.registryAbbreviation]]
@@ -31,7 +31,7 @@
 #                   ,.siteInfoUrl = .configSiteInfoUrl
 #                   ,.cdmRomReportUrl = .exampleRomOutputFolder
 #                   ,.datasetsToCheck = .testDataSetsToCheck[[.registryAbbreviation]]
-#                   ,.nonCriticalChecks = NULL
+#                   ,.nonCriticalChecks = manualNcChecks
 #                   ,.outputUrl = glue::glue("{.reportOutputUrl}/{.registryAbbreviation}/{.dataPullYear}/{.dataPullDate}/")
 #                   ,.isR = .testIsR[[.registryAbbreviation]])
 # 
