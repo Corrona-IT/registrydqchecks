@@ -101,7 +101,8 @@ perpetuateExcelComments <- function(.lastMonthCheckExcelFileUrl
           toPrint <- finalDs[c("Investigator", "Date Investigated", "Resolution", "Date Resolved", "Notes")] |>
             dplyr::arrange(!is.na(Investigator), Investigator
                            ,!is.na("Date Investigated"), "Date Investigated"
-                           ,!is.na(Resolution), Resolution)
+                           ,!is.na(Resolution), desc(Resolution)
+                           ,!is.na("Date Resolved"), "Date Resolved")
           
           # Load the Excel file to write information into
           wb = openxlsx::loadWorkbook(glue::glue("{.thisMonthCheckExcelFileUrl}"))
