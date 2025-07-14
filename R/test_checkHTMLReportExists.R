@@ -12,10 +12,11 @@ if(lubridate::month(lubridate::today()) < 10) {
 
 current_year <- lubridate::year(lubridate::today())
 
-# Assigning dir
+# Assigning dir - update to the folders you want to save the data at
 base_report_url <- "C:/Users/andrew.vancil/PPD (CRG)/Biostat Data Files - Registry Data"
 base_report_url <- "C:/Users/lina.li2/PPD (CRG)/Biostat Data Files - Registry Data"
-output_url <- "C:/Users/lina.li2/OneDrive - Thermo Fisher Scientific/Documents/Registry/Test"
+output_url <- "C:/Users/lina.li2/PPD (CRG)/Core_Biostat and Epi Team Site - Biostat Registries Data Quality Program"
+dir.exists(output_url)
 
 # Test code below to incorporate base_report_url and output_url? I'm not sure if I'm doing this correctly
 check_dq_html <- function(base_report_url, output_url) {
@@ -38,7 +39,7 @@ check_dq_html <- function(base_report_url, output_url) {
   # List of registry directories we assigned earlier (add PsA, GPP, and other reg dir later)
   reg_dir <- c(AA_dir, AD_dir, IBD_dir, MS_dir, NMO_dir, PSO_dir, RA_dir, RAJ_dir)
   
-  # Generate tibbles for each directory
+  # Generate tibbles for each reg
   dq_html_list <- lapply(reg_dir, function(directory) {
     tibble(
       dq_html_reports = list.files(directory, 
@@ -47,7 +48,7 @@ check_dq_html <- function(base_report_url, output_url) {
     )
   })
   
-  # Optionally, name the list elements for easier access
+  # Name the list elements for easier access
   names(dq_html_list) <- paste0("dq_html_reports_", tolower(reg_list))
   
   return(dq_html_list)
@@ -72,15 +73,15 @@ dq_html_list <- lapply(reg_dir, function(directory) {
 # Combine all into one table
 combined_dq_html <- bind_rows(dq_html_list)
 
-# Print the results - do we want to output this in Excel?
+# Print the results
 writexl::write_xlsx(combined_dq_html, glue("{output_url}/dq_html_list.xlsx"))
 
 
 # An example of what it would look like if it is included as a function in the registrydqchecks package
 # library(registrydqchecks)
-Test <- registrydqchecks::check_dq_html(
-  base_report_url = "C:/Users/lina.li2/PPD (CRG)/Biostat Data Files - Registry Data"
-  ,output_url = "C:/Users/lina.li2/OneDrive - Thermo Fisher Scientific/Documents/Registry/Test")
+# Test <- registrydqchecks::check_dq_html(
+#   base_report_url = "C:/Users/lina.li2/PPD (CRG)/Biostat Data Files - Registry Data"
+#   ,output_url = "C:/Users/lina.li2/OneDrive - Thermo Fisher Scientific/Documents/Registry/Test")
 
 # Create a function - old code 
 # check_dq_html <- function(directory) {
