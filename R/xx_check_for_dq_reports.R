@@ -1,4 +1,6 @@
-#' check_for_dq_reports Function to check for presence of DQ reports, both excel and html
+#' check_for_dq_reports 
+#' 
+#' @description Function to check for presence of DQ reports, both excel and html
 #'
 #' @param base_report_url The url string to the base DQ reports folder
 #' @param base_html_report_url The url string for the top level Biostat Data Files folder
@@ -11,11 +13,7 @@
 #' @importFrom dplyr rowwise mutate case_when ungroup group_by select
 #' @importFrom stringr str_detect str_extract
 #' 
-#' 
-#' 
-base_report_url <- c("C:/Users/andrew.vancil/PPD (CRG)/Core_Biostat and Epi Team Site - Biostat Registry Data Quality Reports")
-base_html_report_url <- c("C:/Users/andrew.vancil/PPD (CRG)/Biostat Data Files - Registry Data")
-output_url <- c("C:/Users/andrew.vancil/PPD (CRG)/Core_Biostat and Epi Team Site - Biostat Registries Data Quality Program/")
+
 
 check_for_dq_reports <- function(base_report_url, base_html_report_url, output_url, year_month = NULL)
   {
@@ -34,21 +32,21 @@ check_for_dq_reports <- function(base_report_url, base_html_report_url, output_u
   
   current_year <- lubridate::year(lubridate::today())
   
-  if (exists("year_month")){
+  if (!is.null(year_month)){
     year_month <- year_month
   } else {
     year_month <- glue::glue(current_year, "-", current_month)
   }
   
-  dq_reps <- tibble(
+  dq_reps <- tibble::tibble(
     dq_reports = 
       list.files(dq_folder,
                  pattern = year_month,
                  recursive = TRUE)
   ) |> 
-    mutate(reg_present = dirname(dirname(dirname(dq_reports))))
+    dplyr::mutate(reg_present = dirname(dirname(dirname(dq_reports))))
   
-  reg_tbl <- tibble("registries_to_check" = list.files(dq_folder),
+  reg_tbl <- tibble::tibble("registries_to_check" = list.files(dq_folder),
                     "lead" = c("Wendi Malley",
                                "Kaylee Ho",
                                "Ning Guo",
@@ -61,8 +59,8 @@ check_for_dq_reports <- function(base_report_url, base_html_report_url, output_u
                                "Alina Onofrei"))
   
   check_excel_table <- reg_tbl |> 
-    left_join(dq_reps, by = c("registries_to_check" = "reg_present")) |> 
-    mutate(dq_reports = replace_na(dq_reports, "missing"))
+    dplyr::left_join(dq_reps, by = c("registries_to_check" = "reg_present")) |> 
+    dplyr::mutate(dq_reports = tidyr::replace_na(dq_reports, "missing"))
   
   # Test code below to incorporate base_report_url and output_url? I'm not sure if I'm doing this correctly
   # check_dq_html <- function(base_html_report_url, output_url) {
@@ -70,14 +68,14 @@ check_for_dq_reports <- function(base_report_url, base_html_report_url, output_u
   #   dir.exists(base_report_url)
     
     # Listing out the html report directories
-    AA_dir <- glue("{base_html_report_url}/AA/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
-    AD_dir <- glue("{base_html_report_url}/AD/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
-    IBD_dir <- glue("{base_html_report_url}/IBD/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
-    MS_dir <- glue("{base_html_report_url}/MS/DQ Checks/Reports/ms/{current_year}/{current_year}-{current_month}/")
-    NMO_dir <- glue("{base_html_report_url}/NMO/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
-    PSO_dir <- glue("{base_html_report_url}/PSO/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
-    RA_dir <- glue("{base_html_report_url}/RA/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
-    RAJ_dir <- glue("{base_html_report_url}/RA Japan/DQ Checks/Reports/raj/{current_year}/{current_year}-{current_month}/")
+    AA_dir <- glue::glue("{base_html_report_url}/AA/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
+    AD_dir <- glue::glue("{base_html_report_url}/AD/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
+    IBD_dir <- glue::glue("{base_html_report_url}/IBD/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
+    MS_dir <- glue::glue("{base_html_report_url}/MS/DQ Checks/Reports/ms/{current_year}/{current_year}-{current_month}/")
+    NMO_dir <- glue::glue("{base_html_report_url}/NMO/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
+    PSO_dir <- glue::glue("{base_html_report_url}/PSO/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
+    RA_dir <- glue::glue("{base_html_report_url}/RA/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
+    RAJ_dir <- glue::glue("{base_html_report_url}/RA Japan/DQ Checks/Reports/raj/{current_year}/{current_year}-{current_month}/")
     
     # Vector of registry abbreviations
     reg_list <- c("AA", "AD", "IBD", "MS", "NMO", "PSO", "RA", "RAJ")
@@ -87,7 +85,7 @@ check_for_dq_reports <- function(base_report_url, base_html_report_url, output_u
     
     # Generate tibbles for each reg
     dq_html_list <- lapply(reg_dir, function(directory) {
-      tibble(
+      tibble::tibble(
         dq_html_reports = list.files(directory, 
                                      pattern = ".html",
                                      recursive = TRUE)
@@ -102,26 +100,29 @@ check_for_dq_reports <- function(base_report_url, base_html_report_url, output_u
   
   # Generate tables for each registry
   dq_html_list <- lapply(reg_dir, function(directory) {
-    dq_df <- tibble(
+    dq_df <- tibble::tibble(
       registry = basename(dirname(dirname(dirname(dirname(directory))))),
       dq_html_reports = list.files(directory,
                                    pattern = ".html",
                                    recursive = TRUE))
     # Edit the registry column values for MS and RA Japan to work around them having an extra folder unlike the other registries
     dq_df <- dq_df |>
-      mutate(registry = if_else(str_starts(dq_html_reports, "ms"), "MS", registry)) |>
-      mutate(registry = if_else(str_starts(dq_html_reports, "raj"), "RAJ", registry)) |>
-      group_by(registry) |>
-      summarise(dq_html_reports = paste(dq_html_reports, collapse = ", ")) |> # Separate the html reports by a comma if there are multiple per registry
-      ungroup()
+      dplyr::mutate(registry = dplyr::if_else(stringr::str_starts(dq_html_reports, "ms"), "MS", registry)) |>
+      dplyr::mutate(registry = dplyr::if_else(stringr::str_starts(dq_html_reports, "raj"), "RAJ", registry)) |>
+      dplyr::group_by(registry) |>
+      dplyr::summarise(dq_html_reports = paste(dq_html_reports, collapse = ", ")) |> # Separate the html reports by a comma if there are multiple per registry
+      dplyr::ungroup()
   })
   
-  # Combine all into one table
-  combined_dq_html <- bind_rows(dq_html_list)
+  # Combine all html into one table
+  combined_dq_html <- dplyr::bind_rows(dq_html_list)
   
-  
+  #combine html and excel report status tables
   all_reports <- check_excel_table |> 
-    left_join(combined_dq_html, by = c("registries_to_check" = "registry")) |> 
-    mutate(dq_html_reports = replace_na(dq_html_reports, "missing"))
+    dplyr::left_join(combined_dq_html, by = c("registries_to_check" = "registry")) |> 
+    dplyr::mutate(dq_html_reports = tidyr::replace_na(dq_html_reports, "missing"))
+  
+  write.csv(all_reports,
+            file = glue::glue("{output_url}dq_report_status_{year_month}.csv"))
   
 }
