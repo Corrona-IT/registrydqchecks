@@ -7,7 +7,7 @@
 #' @param output_url The url string for where I want to save the reports
 #' @param year_month Optional; Specific month-year to look up the status; defaults to current month; enter as "YYYY-MM"
 #'
-#' @return A .csv table recording which registries have completed DQ reports for the current month, saved in the specified output location
+#' @returns A .csv table recording which registries have completed DQ reports for the current month, saved in the specified output location
 #' @export
 #' 
 #' @importFrom dplyr mutate ungroup group_by select left_join summarise
@@ -17,7 +17,7 @@
 
 
 check_for_dq_reports <- function(base_report_url, base_html_report_url, output_url, year_month = NULL)
-  {
+{
   
   stopifnot(dir.exists(base_report_url))
   stopifnot(dir.exists(base_html_report_url))
@@ -48,48 +48,48 @@ check_for_dq_reports <- function(base_report_url, base_html_report_url, output_u
     mutate(reg_present = dirname(dirname(dirname(dq_reports))))
   
   reg_tbl <- tibble::tibble("registries_to_check" = list.files(dq_folder),
-                    "lead" = c("Wendi Malley",
-                               "Kaylee Ho",
-                               "Ning Guo",
-                               "Margaux Crabtree",
-                               "Maggie Yu",
-                               "Margaux Crabtree",
-                               "Paul Lakin",
-                               "Ning Guo",
-                               "Ying Shan",
-                               "Alina Onofrei"))
+                            "lead" = c("Wendi Malley",
+                                       "Kaylee Ho",
+                                       "Ning Guo",
+                                       "Margaux Crabtree",
+                                       "Maggie Yu",
+                                       "Margaux Crabtree",
+                                       "Paul Lakin",
+                                       "Ning Guo",
+                                       "Ying Shan",
+                                       "Alina Onofrei"))
   
   check_excel_table <- reg_tbl |> 
     left_join(dq_reps, by = c("registries_to_check" = "reg_present")) |> 
     mutate(dq_reports = tidyr::replace_na(dq_reports, "missing"))
-    
-    # Listing out the html report directories
-    AA_dir <- glue("{base_html_report_url}/AA/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
-    AD_dir <- glue("{base_html_report_url}/AD/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
-    IBD_dir <- glue("{base_html_report_url}/IBD/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
-    MS_dir <- glue("{base_html_report_url}/MS/DQ Checks/Reports/ms/{current_year}/{current_year}-{current_month}/")
-    NMO_dir <- glue("{base_html_report_url}/NMO/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
-    PSO_dir <- glue("{base_html_report_url}/PSO/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
-    RA_dir <- glue("{base_html_report_url}/RA/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
-    RAJ_dir <- glue("{base_html_report_url}/RA Japan/DQ Checks/Reports/raj/{current_year}/{current_year}-{current_month}/")
-    
-    # Vector of registry abbreviations
-    reg_list <- c("AA", "AD", "IBD", "MS", "NMO", "PSO", "RA", "RAJ")
-    
-    # List of registry directories we assigned earlier (add PsA, GPP, and other reg dir later)
-    reg_dir <- c(AA_dir, AD_dir, IBD_dir, MS_dir, NMO_dir, PSO_dir, RA_dir, RAJ_dir)
-    
-    # Generate tibbles for each reg
-    dq_html_list <- lapply(reg_dir, function(directory) {
-      tibble::tibble(
-        dq_html_reports = list.files(directory, 
-                                     pattern = ".html",
-                                     recursive = TRUE)
-      )
-    })
-    
-    # Name the list elements for easier access
-    names(dq_html_list) <- paste0("dq_html_reports_", tolower(reg_list))
+  
+  # Listing out the html report directories
+  AA_dir <- glue("{base_html_report_url}/AA/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
+  AD_dir <- glue("{base_html_report_url}/AD/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
+  IBD_dir <- glue("{base_html_report_url}/IBD/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
+  MS_dir <- glue("{base_html_report_url}/MS/DQ Checks/Reports/ms/{current_year}/{current_year}-{current_month}/")
+  NMO_dir <- glue("{base_html_report_url}/NMO/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
+  PSO_dir <- glue("{base_html_report_url}/PSO/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
+  RA_dir <- glue("{base_html_report_url}/RA/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
+  RAJ_dir <- glue("{base_html_report_url}/RA Japan/DQ Checks/Reports/raj/{current_year}/{current_year}-{current_month}/")
+  
+  # Vector of registry abbreviations
+  reg_list <- c("AA", "AD", "IBD", "MS", "NMO", "PSO", "RA", "RAJ")
+  
+  # List of registry directories we assigned earlier (add PsA, GPP, and other reg dir later)
+  reg_dir <- c(AA_dir, AD_dir, IBD_dir, MS_dir, NMO_dir, PSO_dir, RA_dir, RAJ_dir)
+  
+  # Generate tibbles for each reg
+  dq_html_list <- lapply(reg_dir, function(directory) {
+    tibble::tibble(
+      dq_html_reports = list.files(directory, 
+                                   pattern = ".html",
+                                   recursive = TRUE)
+    )
+  })
+  
+  # Name the list elements for easier access
+  names(dq_html_list) <- paste0("dq_html_reports_", tolower(reg_list))
   
   # Generate tables for each registry
   dq_html_list <- lapply(reg_dir, function(directory) {
@@ -116,6 +116,6 @@ check_for_dq_reports <- function(base_report_url, base_html_report_url, output_u
     mutate(dq_html_reports = tidyr::replace_na(dq_html_reports, "missing"))
   
   write.csv(all_reports,
-            file = glue::glue("{output_url}dq_report_status_{year_month}.csv"))
+            file = glue("{output_url}dq_report_status_{year_month}.csv"))
   
 }
