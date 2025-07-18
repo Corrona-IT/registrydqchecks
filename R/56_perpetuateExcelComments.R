@@ -12,8 +12,8 @@ perpetuateExcelComments <- function(.lastMonthCheckExcelFileUrl
                                     ,.thisMonthCheckExcelFileUrl
                                     ){
     # Read in Excel file with the checks
-    lastMonthAllChecksExcel <- readxl::read_xlsx(glue::glue("{.lastMonthCheckExcelFileUrl}"))
-    thisMonthAllChecksExcel <- readxl::read_xlsx(glue::glue("{.thisMonthCheckExcelFileUrl}"))
+    lastMonthAllChecksExcel <- readxl::read_xlsx(glue::glue("{.lastMonthCheckExcelFileUrl}"), sheet = "qualityChecks")
+    thisMonthAllChecksExcel <- readxl::read_xlsx(glue::glue("{.thisMonthCheckExcelFileUrl}"), sheet = "qualityChecks")
     
     # Identify unique check identifiers from last month
     lastMonthDsToWorkWith <- lastMonthAllChecksExcel |>
