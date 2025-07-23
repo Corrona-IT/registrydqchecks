@@ -76,3 +76,5 @@ combined_dq_html <- bind_rows(dq_html_list)
 # Print the results
 writexl::write_xlsx(combined_dq_html, glue("{output_url}/dq_html_list_test.xlsx"))
 
+# Test function
+test <- check_dq_html(base_report_url, output_url)
