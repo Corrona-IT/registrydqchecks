@@ -15,6 +15,9 @@
 #' @importFrom glue glue
 #' 
 
+library(tidyverse)
+library(glue)
+library(stringr)
 
 check_for_dq_reports <- function(base_report_url, base_html_report_url, output_url, year_month = NULL)
 {
@@ -119,3 +122,10 @@ check_for_dq_reports <- function(base_report_url, base_html_report_url, output_u
             file = glue("{output_url}dq_report_status_{year_month}.csv"))
   
 }
+
+# Testing function
+
+test <- check_for_dq_reports(base_report_url = "C:/Users/lina.li2/PPD (CRG)/Core_Biostat and Epi Team Site - Biostat Registry Data Quality Reports",
+                                 base_html_report_url = "C:/Users/lina.li2/PPD (CRG)/Biostat Data Files - RA Japan/DQ checks/Reports/raj", 
+                                 output_url = "C:/Users/lina.li2/PPD (CRG)/Core_Biostat and Epi Team Site - Biostat Registries Data Quality Program", 
+                                 year_month = "2025-07")
