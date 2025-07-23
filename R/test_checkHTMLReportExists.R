@@ -15,8 +15,8 @@ current_year <- lubridate::year(lubridate::today())
 # Assigning dir - update to the folders you want to save the data at
 base_report_url <- "C:/Users/andrew.vancil/PPD (CRG)/Biostat Data Files - Registry Data"
 base_report_url <- "C:/Users/lina.li2/PPD (CRG)/Biostat Data Files - Registry Data"
-output_url <- "C:/Users/lina.li2/PPD (CRG)/Core_Biostat and Epi Team Site - Biostat Registries Data Quality Program"
-dir.exists(output_url)
+output_url <- "C:/Users/lina.li2/OneDrive - Thermo Fisher Scientific/Documents/DQ Program WG"
+dir.exists(RAJ_dir)
 
 # Test code below to incorporate base_report_url and output_url? I'm not sure if I'm doing this correctly
 check_dq_html <- function(base_report_url, output_url) {
@@ -24,14 +24,14 @@ check_dq_html <- function(base_report_url, output_url) {
   dir.exists(base_report_url)
   
   # Listing out the html report directories
-  AA_dir <- glue("{base_report_url}/AA/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
-  AD_dir <- glue("{base_report_url}/AD/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
-  IBD_dir <- glue("{base_report_url}/IBD/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
-  MS_dir <- glue("{base_report_url}/MS/DQ Checks/Reports/ms/{current_year}/{current_year}-{current_month}/")
-  NMO_dir <- glue("{base_report_url}/NMO/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
-  PSO_dir <- glue("{base_report_url}/PSO/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
-  RA_dir <- glue("{base_report_url}/RA/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
-  RAJ_dir <- glue("{base_report_url}/RA Japan/DQ Checks/Reports/raj/{current_year}/{current_year}-{current_month}/")
+  AA_dir <- glue::glue("{base_report_url}/AA/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
+  AD_dir <- glue::glue("{base_report_url}/AD/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
+  IBD_dir <- glue::glue("{base_report_url}/IBD/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
+  MS_dir <- glue::glue("{base_report_url}/MS/DQ Checks/Reports/ms/{current_year}/{current_year}-{current_month}/")
+  NMO_dir <- glue::glue("{base_report_url}/NMO/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
+  PSO_dir <- glue::glue("{base_report_url}/PSO/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
+  RA_dir <- glue::glue("{base_report_url}/RA/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
+  RAJ_dir <- glue::glue("{base_report_url}/RA Japan/DQ Checks/Reports/raj/{current_year}/{current_year}-{current_month}/")
   
   # Vector of registry abbreviations
   reg_list <- c("AA", "AD", "IBD", "MS", "NMO", "PSO", "RA", "RAJ")
@@ -74,19 +74,5 @@ dq_html_list <- lapply(reg_dir, function(directory) {
 combined_dq_html <- bind_rows(dq_html_list)
 
 # Print the results
-writexl::write_xlsx(combined_dq_html, glue("{output_url}/dq_html_list.xlsx"))
+writexl::write_xlsx(combined_dq_html, glue("{output_url}/dq_html_list_test.xlsx"))
 
-
-# An example of what it would look like if it is included as a function in the registrydqchecks package
-# library(registrydqchecks)
-# Test <- registrydqchecks::check_dq_html(
-#   base_report_url = "C:/Users/lina.li2/PPD (CRG)/Biostat Data Files - Registry Data"
-#   ,output_url = "C:/Users/lina.li2/OneDrive - Thermo Fisher Scientific/Documents/Registry/Test")
-
-# Create a function - old code 
-# check_dq_html <- function(directory) {
-#   tibble(
-#     dq_html_reports = list.files(directory, 
-#                                  pattern = ".html",
-#                                  recursive = TRUE)
-#   )}
