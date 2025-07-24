@@ -65,14 +65,14 @@ check_for_dq_reports <- function(base_report_url, base_html_report_url, output_u
     mutate(dq_reports = tidyr::replace_na(dq_reports, "missing"))
   
   # Listing out the html report directories
-  AA_dir <- glue("{base_html_report_url}/AA/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
-  AD_dir <- glue("{base_html_report_url}/AD/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
-  IBD_dir <- glue("{base_html_report_url}/IBD/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
-  MS_dir <- glue("{base_html_report_url}/MS/DQ Checks/Reports/ms/{current_year}/{current_year}-{current_month}/")
-  NMO_dir <- glue("{base_html_report_url}/NMO/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
-  PSO_dir <- glue("{base_html_report_url}/PSO/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
-  RA_dir <- glue("{base_html_report_url}/RA/DQ Checks/Reports/{current_year}/{current_year}-{current_month}/")
-  RAJ_dir <- glue("{base_html_report_url}/RA Japan/DQ Checks/Reports/raj/{current_year}/{current_year}-{current_month}/")
+  AA_dir <- glue("{base_html_report_url}/AA/DQ Checks/Reports/{current_year}/{year_month}/")
+  AD_dir <- glue("{base_html_report_url}/AD/DQ Checks/Reports/{current_year}/{year_month}/")
+  IBD_dir <- glue("{base_html_report_url}/IBD/DQ Checks/Reports/{current_year}/{year_month}/")
+  MS_dir <- glue("{base_html_report_url}/MS/DQ Checks/Reports/ms/{current_year}/{year_month}/")
+  NMO_dir <- glue("{base_html_report_url}/NMO/DQ Checks/Reports/{current_year}/{year_month}/")
+  PSO_dir <- glue("{base_html_report_url}/PSO/DQ Checks/Reports/{current_year}/{year_month}/")
+  RA_dir <- glue("{base_html_report_url}/RA/DQ Checks/Reports/{current_year}/{year_month}/")
+  RAJ_dir <- glue("{base_html_report_url}/RA Japan/DQ Checks/Reports/raj/{current_year}/{year_month}/")
   
   # Vector of registry abbreviations
   reg_list <- c("AA", "AD", "IBD", "MS", "NMO", "PSO", "RA", "RAJ")
