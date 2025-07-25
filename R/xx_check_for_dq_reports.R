@@ -14,6 +14,8 @@
 #' @importFrom stringr str_sub str_starts
 #' @importFrom glue glue
 #' 
+#' @example xx_check_for_dq_reports_example.R
+#' 
 
 # Define the function check_for_dq_reports
 check_for_dq_reports <- function(base_report_url, base_html_report_url, output_url, year_month = NULL)
