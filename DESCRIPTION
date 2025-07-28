@@ -29,3 +29,4 @@ Imports:
     ,huxtable
     ,arsenal
     ,rlang
+    ,tidyr
