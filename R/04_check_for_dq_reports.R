@@ -14,7 +14,7 @@
 #' @importFrom stringr str_sub str_starts
 #' @importFrom glue glue
 #' 
-#' @example ./R/99_check_for_dq_reports_test/04_check_for_dq_reports_example.R
+#' @note See code in registrydqchecks repository - ./R/99_check_for_dq_reports_test/04_check_for_dq_reports_example.R
 #' 
 
 # Define the function check_for_dq_reports

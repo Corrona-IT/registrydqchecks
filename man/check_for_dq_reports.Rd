@@ -26,23 +26,6 @@ A .csv table recording which registries have completed DQ reports for the curren
 \description{
 Function to check for presence of DQ reports, both excel and html. Runs best when your working directory is registrydqchecks/R/
 }
-\examples{
-base_report_url <- "C:/Users/andrew.vancil/Thermo Fisher Scientific/Core_Biostat and Epi Team Site - Biostat Registry Data Quality Reports/"
-base_html_report_url <- "C:/Users/andrew.vancil/PPD (CRG)/Biostat Data Files - Registry Data/"
-output_url <- "C:/Users/andrew.vancil/Thermo Fisher Scientific/Core_Biostat and Epi Team Site - Biostat Registries Data Quality Program"
-
-# Call function check_for_dq_reports for current month
-check_for_dq_reports(
-  base_report_url,
-  base_html_report_url,
-  output_url
-)
-
-# assign a year-month date of interest
-check_for_dq_reports(
-  base_report_url,
-  base_html_report_url,
-  output_url, 
-  year_month = "2025-06"
-)
+\note{
+See code in registrydqchecks repository - ./R/99_check_for_dq_reports_test/04_check_for_dq_reports_example.R
 }
