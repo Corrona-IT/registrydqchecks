@@ -42,6 +42,19 @@ data_changes <- function(curr_dataset, comp_dataset, by_vars, output_folder, out
     comp_data <- comp_dataset %>%
       arrange(!!!rlang::syms(by_vars))
     
+    #check for date class vars, convert to character
+    curr_data <- curr_data %>% 
+      mutate(across(
+        .cols = where(~ inherits(.x, "Date")),  
+        .fns = as.character                     
+      ))
+    
+    comp_data <- comp_data %>% 
+      mutate(across(
+        .cols = where(~ inherits(.x, "Date")),  
+        .fns = as.character                     
+      ))
+    
     overall_compare <- summary(arsenal::comparedf(comp_data,
                                                   curr_data,
                                                   by = by_vars))
