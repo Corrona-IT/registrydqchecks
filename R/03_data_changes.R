@@ -42,36 +42,64 @@ data_changes <- function(curr_dataset, comp_dataset, by_vars, output_folder, out
     comp_data <- comp_dataset %>%
       arrange(!!!rlang::syms(by_vars))
     
+    #check for date class vars, convert to character
+    curr_data <- curr_data %>% 
+      mutate(across(
+        .cols = where(~ inherits(.x, "Date")),  
+        .fns = as.character                     
+      ))
+    
+    comp_data <- comp_data %>% 
+      mutate(across(
+        .cols = where(~ inherits(.x, "Date")),  
+        .fns = as.character                     
+      ))
+    
     overall_compare <- summary(arsenal::comparedf(comp_data,
                                                   curr_data,
                                                   by = by_vars))
+
     
     # Clean comparison tables
-    frame_summary <- overall_compare$frame.summary.table %>% as_hux() %>%
+    frame_summary <- overall_compare$frame.summary.table %>% 
+      mutate(across(all_of(contains("date")), ~ as.character(format(as.Date(.x),
+                                                                    format = "%m/%d/%Y")))) %>% 
+      as_hux() %>%
       huxtable::add_footnote(text = glue("x is the data from previous and y is the data from new.")) %>%
       huxtable::add_footnote(text = glue("by variables {by_vars_list}")) %>%
       huxtable::set_caption("Overall Dataframe summary")
     
     overall_summary <- overall_compare$comparison.summary.table %>%
-      mutate(value = as.integer(value)) %>% as_hux() %>%
+      mutate(value = as.integer(value)) %>%  
+      mutate(across(all_of(contains("date")), ~ as.character(format(as.Date(.x),
+                                                                    format = "%m/%d/%Y")))) %>% 
+      as_hux() %>%
       huxtable::add_footnote(text = glue("x is the data from previous and y is the data from new.")) %>%
       huxtable::add_footnote(text = glue("by variables {by_vars_list}")) %>%
       huxtable::set_caption("Summary of overall comparison")
     
-    diffs.byvar <- overall_compare$diffs.byvar.table %>% as_hux() %>%
+    diffs.byvar <- overall_compare$diffs.byvar.table %>% 
+      mutate(across(all_of(contains("date")), ~ as.character(format(as.Date(.x),
+                                                                    format = "%m/%d/%Y")))) %>% 
+      as_hux() %>%
       filter(n > 0 | NAs > 0) %>%
       huxtable::add_footnote(text = glue("x is the data from previous and y is the data from new.")) %>%
       huxtable::set_caption("Number of Differences by Variable")
     
     vars.ns <- overall_compare$vars.ns.table %>%
       mutate(position = as.integer(position),
-             class = as.character(class)) %>%
+             class = as.character(class)) %>% 
+      mutate(across(all_of(contains("date")), ~ as.character(format(as.Date(.x),
+                                                                    format = "%m/%d/%Y")))) %>% 
       as_hux() %>%
       huxtable::add_footnote(text = glue("x is the data from previous and y is the data from new.")) %>%
       huxtable::set_caption("Variables not shared")
     
     obs.ns <- overall_compare$obs.table %>%
-      mutate_if(is.integer, as.character) %>% as_hux() %>%
+      mutate_if(is.integer, as.character) %>% 
+      mutate(across(all_of(contains("date")), ~ as.character(format(as.Date(.x),
+                                                                    format = "%m/%d/%Y")))) %>% 
+      as_hux() %>%
       huxtable::add_footnote(text = glue("x is the data from previous and y is the data from new.")) %>%
       huxtable::add_footnote(text = glue("by variables {by_vars_list}")) %>%
       huxtable::set_caption("Observations not shared")
@@ -79,7 +107,10 @@ data_changes <- function(curr_dataset, comp_dataset, by_vars, output_folder, out
     diffs <- overall_compare$diffs.table %>%
       mutate(values.x = as.character(values.x),
              values.y = as.character(values.y)) %>%
-      mutate_if(is.integer, as.character) %>% as_hux() %>%
+      mutate_if(is.integer, as.character) %>% 
+      mutate(across(all_of(contains("date")), ~ as.character(format(as.Date(.x),
+                                                                    format = "%m/%d/%Y")))) %>% 
+      as_hux() %>%
       huxtable::add_footnote(text = glue("x is the data from previous and y is the data from new.")) %>%
       huxtable::add_footnote(text = glue("by variables {by_vars_list}")) %>%
       huxtable::set_caption("Detailed Differences in Variables")
