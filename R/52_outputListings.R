@@ -155,6 +155,10 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
   openxlsx::writeData(.wbLong, "supporting_details", dropdown_values, colNames = FALSE)
   openxlsx::protectWorksheet(.wbLong, sheet = "supporting_details", protect = TRUE, lockFormattingCells = TRUE)
   
+  .columnTitles <- as.data.frame(t(c("Investigator", "Date Investigated", "Resolution", "Date Resolved", "Notes", "Extra1", "Extra2", "newCheck")))
+  .anchorColumn <- ncol(.columnTitles) + 1
+  .anchorColumnPlus <- .anchorColumn + 1
+  
   # Save the .xlsx listings of codebook checks
 
   for(.ncCheckName in names(.checksToOutput$nonCriticalChecks[[.dsName]]$codebookChecks)){
@@ -194,14 +198,14 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
 
           .checkName = .checksToOutput$nonCriticalChecks[[.dsName]]$codebookChecks[[.ncCheckName]]$checkId
           .checkDsName = glue::glue("{.checkName}_{.dsName}")
-          openxlsx::writeData(.wbLong, "qualityChecks", c(.checkDsName), startCol = 8, startRow = currentRow)
+          openxlsx::writeData(.wbLong, "qualityChecks", c(.checkDsName), startCol = .anchorColumnPlus+1, startRow = currentRow)
           currentRow <- currentRow + 1
-          openxlsx::writeData(.wbLong, "qualityChecks", .checksToOutput$nonCriticalChecks[[.dsName]]$codebookChecks[[.ncCheckName]]$checkTitle, startCol = 8, startRow = currentRow)
+          openxlsx::writeData(.wbLong, "qualityChecks", .checksToOutput$nonCriticalChecks[[.dsName]]$codebookChecks[[.ncCheckName]]$checkTitle, startCol = .anchorColumnPlus+1, startRow = currentRow)
           currentRow <- currentRow + 1
-          openxlsx::writeData(.wbLong, "qualityChecks", .checksToOutput$nonCriticalChecks[[.dsName]]$codebookChecks[[.ncCheckName]]$checkDescription, startCol = 8, startRow = currentRow)
+          openxlsx::writeData(.wbLong, "qualityChecks", .checksToOutput$nonCriticalChecks[[.dsName]]$codebookChecks[[.ncCheckName]]$checkDescription, startCol = .anchorColumnPlus+1, startRow = currentRow)
           currentRow <- currentRow + 1
           openxlsx::addStyle(.wbLong, "qualityChecks", style = topBorderStyle, rows = currentRow, cols = 1:30)
-          openxlsx::writeData(.wbLong, "qualityChecks", .subsetCalculatedVariableDataset, startCol = 7, startRow = currentRow)
+          openxlsx::writeData(.wbLong, "qualityChecks", .subsetCalculatedVariableDataset, startCol = .anchorColumnPlus, startRow = currentRow)
           currentRow <- currentRow + 1
           openxlsx::addStyle(.wbLong, "qualityChecks", style = bottomBorderStyle, rows = currentRow + nrow(.subsetCalculatedVariableDataset), cols = 1:30)
           currentRow <- currentRow + nrow(.subsetCalculatedVariableDataset) + 2                  
@@ -246,11 +250,11 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
           bg_color_style <- openxlsx::createStyle(fgFill = "#F2DCDB", border = c("bottom", "left", "right"), borderColour = "#D3D3D3")  # Reddish background
           
           if(nrow(.subsetSiteDataset) > 0){
-            openxlsx::writeData(.wbLong, "qualityChecks", .ncCheckName, startCol = 8, startRow = currentRow)
+            openxlsx::writeData(.wbLong, "qualityChecks", .ncCheckName, startCol = .anchorColumnPlus+1, startRow = currentRow)
             currentRow <- currentRow + 1
-            openxlsx::writeData(.wbLong, "qualityChecks", .checksToOutput$nonCriticalChecks[[.dsName]]$nPctList[[.ncCheckName]]$checkTitle, startCol = 8, startRow = currentRow)
+            openxlsx::writeData(.wbLong, "qualityChecks", .checksToOutput$nonCriticalChecks[[.dsName]]$nPctList[[.ncCheckName]]$checkTitle, startCol = .anchorColumnPlus+1, startRow = currentRow)
             currentRow <- currentRow + 1
-            openxlsx::writeData(.wbLong, "qualityChecks", .checksToOutput$nonCriticalChecks[[.dsName]]$nPctList[[.ncCheckName]]$checkDescription, startCol = 8, startRow = currentRow)
+            openxlsx::writeData(.wbLong, "qualityChecks", .checksToOutput$nonCriticalChecks[[.dsName]]$nPctList[[.ncCheckName]]$checkDescription, startCol = .anchorColumnPlus+1, startRow = currentRow)
             currentRow <- currentRow + 1
             openxlsx::addStyle(.wbLong, "qualityChecks", style = topBorderStyle, rows = currentRow, cols = 1:30)
             
@@ -258,7 +262,7 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
               openxlsx::addStyle(.wbLong, sheet = "qualityChecks", style = bg_color_style, rows = currentRow:(currentRow + nrow(.subsetSiteDataset)), cols = 1:30, gridExpand = TRUE, stack = TRUE)  
             }
             
-            openxlsx::writeData(.wbLong, "qualityChecks", .subsetSiteDataset, startCol = 7, startRow = currentRow)
+            openxlsx::writeData(.wbLong, "qualityChecks", .subsetSiteDataset, startCol = .anchorColumnPlus, startRow = currentRow)
             currentRow <- currentRow + 1
             openxlsx::addStyle(.wbLong, "qualityChecks", style = bottomBorderStyle, rows = currentRow + nrow(.subsetSiteDataset), cols = 1:30)
             currentRow <- currentRow + nrow(.subsetSiteDataset) + 2
@@ -283,13 +287,13 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
   )
 
   
-  .columnTitles <- as.data.frame(t(c("Investigator", "Date Investigated", "Resolution", "Date Resolved", "Notes")))
   .gray_style <- openxlsx::createStyle(fgFill = "gray")
   .locked_style <- openxlsx::createStyle(locked = TRUE)
   openxlsx::writeData(.wbLong, sheet = "qualityChecks", x = .columnTitles, startCol = 1, colNames = FALSE)
-  openxlsx::addStyle(.wbLong, sheet = "qualityChecks", style = .gray_style, cols = 6, rows = 1:currentRow, stack = TRUE)
+  openxlsx::writeData(.wbLong, sheet = "qualityChecks", x = "anchor", startCol = .anchorColumn, colNames = FALSE)
+  openxlsx::addStyle(.wbLong, sheet = "qualityChecks", style = .gray_style, cols = .anchorColumn, rows = 1:currentRow, stack = TRUE)
   openxlsx::freezePane(.wbLong, sheet = "qualityChecks", firstActiveRow = 2)
-  openxlsx::setColWidths(.wbLong, sheet = "qualityChecks", cols = 7, widths = 0)
+  openxlsx::setColWidths(.wbLong, sheet = "qualityChecks", cols = .anchorColumnPlus, widths = 0)
 
 
   openxlsx::saveWorkbook(.wbLong

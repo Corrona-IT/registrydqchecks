@@ -1,26 +1,26 @@
 # # remotes::install_github("corrona-it/registrydqchecksreportdown@develop")
 # 
 # # Open sink file to store console output
-# temp_log_file <- registrydqchecks::open_sink()
+# # temp_log_file <- registrydqchecks::open_sink()
 # 
 # # Choose from aa, ad, gpp, ibd, ms, nmo, psa, pso, ra, raj
-# .registryAbbreviation <- "ad"
+# .registryAbbreviation <- "aa"
 # 
 # .dataPullYear <- "2025"
-# .dataPullFolderDate <- "2025-05-02"
-# .dataPullDate <- "2025-05-02"
+# .dataPullFolderDate <- "2025-07-05"
+# .dataPullDate <- "2025-07-05"
 # 
 # .lastMonthDataPullYear <- "2025"
-# .lastMonthDataPullFolderDate <- "2025-04-02"
-# .lastMonthDataPullDate <- "2025-04-02"
+# .lastMonthDataPullFolderDate <- "2025-06-05"
+# .lastMonthDataPullDate <- "2025-06-05"
 # 
 # source("config.R")
 # 
 # # validateCodebook(codebookUrl = .testCodebookUrl[[.registryAbbreviation]]
 # #                   ,datasetNames = .testDataSetsToCheck[[.registryAbbreviation]])
 # 
-# # checks <- readRDS("C:/Users/ScottKreider/Documents/scrap/exampleOutput/ad_2024-10-01_2024-10-16_1602_checks.rds")
-# # manualNcChecks <- checks$nonCriticalChecks
+# checks <- readRDS("C:/Users/scott.kreider/Documents/scrap/exampleOutput/aa_2025-07-05_2025-07-21_1442_checks.rds")
+# manualNcChecks <- checks$nonCriticalChecks
 # 
 # outputUrl <- runRegistryChecks(.registry = .registryAbbreviation
 #                   ,.prelimDataFolderUrl = .testDataFolderUrl[[.registryAbbreviation]]
@@ -31,7 +31,7 @@
 #                   ,.siteInfoUrl = .configSiteInfoUrl
 #                   ,.cdmRomReportUrl = .exampleRomOutputFolder
 #                   ,.datasetsToCheck = .testDataSetsToCheck[[.registryAbbreviation]]
-#                   ,.nonCriticalChecks = NULL
+#                   ,.nonCriticalChecks = manualNcChecks
 #                   ,.outputUrl = glue::glue("{.reportOutputUrl}/{.registryAbbreviation}/{.dataPullYear}/{.dataPullDate}/")
 #                   ,.isR = .testIsR[[.registryAbbreviation]])
 # 
@@ -45,7 +45,7 @@
 # .siteInfoUrl = .configSiteInfoUrl
 # .cdmRomReportUrl = .exampleRomOutputFolder
 # .datasetsToCheck = .testDataSetsToCheck[[.registryAbbreviation]]
-# .nonCriticalChecks = NULL
+# .nonCriticalChecks = manualNcChecks
 # .outputUrl = glue::glue("{.reportOutputUrl}/{.registryAbbreviation}/{.dataPullYear}/{.dataPullDate}/")
 # .isR = .testIsR[[.registryAbbreviation]]
 # 
@@ -57,6 +57,6 @@
 # #                        ,.dataPullDate = .dataPullDate
 # #                        ,.overwrite = FALSE)
 # 
-# registrydqchecks::close_sink(temp_log_file = temp_log_file
-#                              ,registry_abbrev = .registry
-#                              ,output_location = outputUrl)
+# # registrydqchecks::close_sink(temp_log_file = temp_log_file
+# #                              ,registry_abbrev = .registry
+# #                              ,output_location = outputUrl)
