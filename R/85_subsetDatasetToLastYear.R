@@ -25,7 +25,7 @@ subsetDatasetToLastYear <- function(.dataset, .timeVar1, .timeVar2, .dataPullDat
     return(subset)
   } else if ("report_subset_date" %in% colnames(.dataset)) {
     # Use report_subset_date to subset dataset if variable1 and variable2 do not exist but report_subset_date exists
-    subset <- .dataset[as.Date(.dataset[[report_subset_date]]) > .comparisonDate, ]
+    subset <- .dataset[as.Date(.dataset[["report_subset_date"]]) > .comparisonDate, ]
     message("NOTE: Using ", report_subset_date, " to subset the dataset")
     return(subset)
   } else {
