@@ -99,10 +99,11 @@ perpetuateExcelComments <- function(.lastMonthCheckExcelFileUrl
         if (length(joinVars) > 0) {
           finalDs <- dplyr::left_join(
             thisMonthFullDs
-            ,lastMonthFullDs
+            ,lastMonthFullDs |> dplyr::mutate(.present = 1L)
             ,by = joinVars
           ) |>
-            distinct()
+            dplyr::mutate(newCheck = dplyr::if_else(is.na(.present), "NEW!", "")) |>
+            dplyr::select(-.present)
           
           # Build dataset to print out
           toPrint <- finalDs |>
