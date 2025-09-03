@@ -173,7 +173,7 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
         print(glue::glue("{.dsName} - {.ncCheckName}"))
         .subsetTimeDataset <- subsetDatasetToLastYear(.checksToOutput$nonCriticalChecks[[.dsName]]$codebookChecks[[.ncCheckName]]$listing
                                                       ,"visitdate"
-                                                      ,"visitdate0"
+                                                      ,"report_subset_date"
                                                       ,.dataPullDate) |>
           dplyr::mutate(dplyr::across(where(is.list),as.character))
         
@@ -229,7 +229,7 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
           print(glue::glue("{.dsName} - {.ncCheckName}"))
           .subsetTimeDataset <- subsetDatasetToLastYear(.checksToOutput$nonCriticalChecks[[.dsName]]$nPctList[[.ncCheckName]]$listing
                                                         ,"visitdate"
-                                                        ,"visitdate0"
+                                                        ,"report_subset_date"
                                                         ,.dataPullDate)
           
           .subsetSiteDataset <- subsetDatasetToActiveSites(
