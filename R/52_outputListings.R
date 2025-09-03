@@ -239,7 +239,7 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
             ,.activeSites = .activeSites
           ) %>%
             # Remove standardized lab values
-            dplyr::select(-any_of(c("StdLabResult", "StdLabUnits", "lowerBound", "upperBound")))
+            dplyr::select(-any_of(c("StdLabResult", "StdLabUnits", "lowerBound", "upperBound", "report_subset_date")))
 
           # .subsetTimeDataset <- .checksToOutput$nonCriticalChecks[[.dsName]]$nPctList[[.ncCheckName]]$listing
           
