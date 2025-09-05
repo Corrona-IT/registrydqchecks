@@ -1,18 +1,18 @@
 # # remotes::install_github("corrona-it/registrydqchecksreportdown@develop")
 # 
 # # Open sink file to store console output
-# temp_log_file <- registrydqchecks::open_sink()
+# # temp_log_file <- registrydqchecks::open_sink()
 # 
 # # Choose from aa, ad, gpp, ibd, ms, nmo, psa, pso, ra, raj
-# .registryAbbreviation <- "ad"
+# .registryAbbreviation <- "gpp"
 # 
 # .dataPullYear <- "2025"
-# .dataPullFolderDate <- "2025-05-02"
-# .dataPullDate <- "2025-05-02"
+# .dataPullFolderDate <- "2025-08-05"
+# .dataPullDate <- "2025-08-05"
 # 
 # .lastMonthDataPullYear <- "2025"
-# .lastMonthDataPullFolderDate <- "2025-04-02"
-# .lastMonthDataPullDate <- "2025-04-02"
+# .lastMonthDataPullFolderDate <- "2025-07-05"
+# .lastMonthDataPullDate <- "2025-07-05"
 # 
 # source("config.R")
 # 
@@ -49,7 +49,7 @@
 # .outputUrl = glue::glue("{.reportOutputUrl}/{.registryAbbreviation}/{.dataPullYear}/{.dataPullDate}/")
 # .isR = .testIsR[[.registryAbbreviation]]
 # 
-# .dsName = "exlab"
+# .dsName = "GPP_drugexp"
 # 
 # # copyRomListingToFolder(.reportOutputUrl = outputUrl
 # #                        ,.romReportUrl = .exampleRomOutputFolder
