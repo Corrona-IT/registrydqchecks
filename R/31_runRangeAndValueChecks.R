@@ -61,8 +61,10 @@ runRangeAndValueChecks <- function(.dsName
 #' 
 #' @importFrom dplyr mutate_at
 replaceNullWithNa <- function(df, columns) {
-  df <- dplyr::mutate_at(df, columns, function(x) {
-    sapply(x, function(y) if (is.null(y)) NA else y)
-  })
+  df <- df |>
+    dplyr::mutate(dplyr::across(dplyr::all_of(columns),
+                    ~ vapply(as.list(.x),
+                    \(y) if (is.null(y)) NA_character_ else paste(y, collapse = ","),
+                    character(1))))
   return(df)
 }
