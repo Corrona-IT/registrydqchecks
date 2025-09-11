@@ -7,12 +7,12 @@
 # .registryAbbreviation <- "gpp"
 # 
 # .dataPullYear <- "2025"
-# .dataPullFolderDate <- "2025-08-05"
-# .dataPullDate <- "2025-08-05"
+# .dataPullFolderDate <- "2025-09-05"
+# .dataPullDate <- "2025-09-05"
 # 
 # .lastMonthDataPullYear <- "2025"
-# .lastMonthDataPullFolderDate <- "2025-07-05"
-# .lastMonthDataPullDate <- "2025-07-05"
+# .lastMonthDataPullFolderDate <- "2025-08-05"
+# .lastMonthDataPullDate <- "2025-08-05"
 # 
 # source("config.R")
 # 
@@ -49,7 +49,7 @@
 # .outputUrl = glue::glue("{.reportOutputUrl}/{.registryAbbreviation}/{.dataPullYear}/{.dataPullDate}/")
 # .isR = .testIsR[[.registryAbbreviation]]
 # 
-# .dsName = "GPP_drugexp"
+# .dsName = "GPP_drugevents"
 # 
 # # copyRomListingToFolder(.reportOutputUrl = outputUrl
 # #                        ,.romReportUrl = .exampleRomOutputFolder
