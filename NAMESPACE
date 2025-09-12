@@ -2,6 +2,7 @@
 
 export(README)
 export(addCheckId)
+export(addExcelReportSubsetDate)
 export(calculatePercentChange)
 export(check_for_dq_reports)
 export(close_sink)

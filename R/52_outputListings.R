@@ -173,7 +173,7 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
         print(glue::glue("{.dsName} - {.ncCheckName}"))
         .subsetTimeDataset <- subsetDatasetToLastYear(.checksToOutput$nonCriticalChecks[[.dsName]]$codebookChecks[[.ncCheckName]]$listing
                                                       ,"visitdate"
-                                                      ,"visitdate0"
+                                                      ,"report_subset_date"
                                                       ,.dataPullDate) |>
           dplyr::mutate(dplyr::across(where(is.list),as.character))
         
@@ -229,7 +229,7 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
           print(glue::glue("{.dsName} - {.ncCheckName}"))
           .subsetTimeDataset <- subsetDatasetToLastYear(.checksToOutput$nonCriticalChecks[[.dsName]]$nPctList[[.ncCheckName]]$listing
                                                         ,"visitdate"
-                                                        ,"visitdate0"
+                                                        ,"report_subset_date"
                                                         ,.dataPullDate)
           
           .subsetSiteDataset <- subsetDatasetToActiveSites(
@@ -239,7 +239,7 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
             ,.activeSites = .activeSites
           ) %>%
             # Remove standardized lab values
-            dplyr::select(-any_of(c("StdLabResult", "StdLabUnits")))
+            dplyr::select(-any_of(c("StdLabResult", "StdLabUnits", "lowerBound", "upperBound", "report_subset_date")))
 
           # .subsetTimeDataset <- .checksToOutput$nonCriticalChecks[[.dsName]]$nPctList[[.ncCheckName]]$listing
           
