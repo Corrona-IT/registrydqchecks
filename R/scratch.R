@@ -4,15 +4,15 @@
 # # temp_log_file <- registrydqchecks::open_sink()
 # 
 # # Choose from aa, ad, gpp, ibd, ms, nmo, psa, pso, ra, raj
-# .registryAbbreviation <- "aa"
+# .registryAbbreviation <- "gpp"
 # 
 # .dataPullYear <- "2025"
-# .dataPullFolderDate <- "2025-07-05"
-# .dataPullDate <- "2025-07-05"
+# .dataPullFolderDate <- "2025-09-05"
+# .dataPullDate <- "2025-09-05"
 # 
 # .lastMonthDataPullYear <- "2025"
-# .lastMonthDataPullFolderDate <- "2025-06-05"
-# .lastMonthDataPullDate <- "2025-06-05"
+# .lastMonthDataPullFolderDate <- "2025-08-05"
+# .lastMonthDataPullDate <- "2025-08-05"
 # 
 # source("config.R")
 # 
@@ -49,7 +49,7 @@
 # .outputUrl = glue::glue("{.reportOutputUrl}/{.registryAbbreviation}/{.dataPullYear}/{.dataPullDate}/")
 # .isR = .testIsR[[.registryAbbreviation]]
 # 
-# .dsName = "exlab"
+# .dsName = "GPP_drugevents"
 # 
 # # copyRomListingToFolder(.reportOutputUrl = outputUrl
 # #                        ,.romReportUrl = .exampleRomOutputFolder
