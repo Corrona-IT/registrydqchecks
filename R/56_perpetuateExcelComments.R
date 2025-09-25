@@ -68,7 +68,7 @@ perpetuateExcelComments <- function(.lastMonthCheckExcelFileUrl
         # Extract the check Investigator subdata for last month
         lastMonthInvestigatorDs <- lastMonthAllChecksExcel |>
           dplyr::slice((lastMonthCheckLocHeader+1):lastMonthCheckLocMax) |>
-          dplyr::select(any_of(c("Investigator",	"Date Investigated",	"Resolution",	"Date Resolved",	"Notes", "NewCheck", "QueryID", "Extra"))) |>
+          dplyr::select(any_of(c("Investigator",	"Date Investigated",	"Resolution",	"Date Resolved",	"Notes", "NewCheck", "QueryID", "QueryStatus"))) |>
           dplyr::mutate(
             `Investigator` = as.character(`Investigator`)
             ,`Date Investigated` = as.Date(`Date Investigated`, tryFormats = c("%Y-%m-%d", "%Y/%m/%d"), optional = TRUE)
@@ -107,7 +107,7 @@ perpetuateExcelComments <- function(.lastMonthCheckExcelFileUrl
           
           # Build dataset to print out
           toPrint <- finalDs |>
-            dplyr::select(any_of(c("Investigator", "Date Investigated", "Resolution", "Date Resolved", "Notes", "NewCheck", "QueryID", "Extra")))
+            dplyr::select(any_of(c("Investigator", "Date Investigated", "Resolution", "Date Resolved", "Notes", "NewCheck", "QueryID", "QueryStatus")))
           
           # Load the Excel file to write information into
           wb = openxlsx::loadWorkbook(glue::glue("{.thisMonthCheckExcelFileUrl}"))

@@ -155,7 +155,7 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
   openxlsx::writeData(.wbLong, "supporting_details", dropdown_values, colNames = FALSE)
   openxlsx::protectWorksheet(.wbLong, sheet = "supporting_details", protect = TRUE, lockFormattingCells = TRUE)
   
-  .columnTitles <- as.data.frame(t(c("Investigator", "Date Investigated", "Resolution", "Date Resolved", "Notes", "NewCheck", "QueryID", "Extra")))
+  .columnTitles <- as.data.frame(t(c("Investigator", "Date Investigated", "Resolution", "Date Resolved", "Notes", "NewCheck", "QueryID", "QueryStatus")))
   .newColumn <- which(tolower(.columnTitles) == "newcheck")
   .anchorColumn <- ncol(.columnTitles) + 1
   .anchorColumnPlus <- .anchorColumn + 1
