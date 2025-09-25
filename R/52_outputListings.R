@@ -207,8 +207,9 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
           currentRow <- currentRow + 1
           openxlsx::addStyle(.wbLong, "qualityChecks", style = topBorderStyle, rows = currentRow, cols = 1:30)
           openxlsx::writeData(.wbLong, "qualityChecks", .subsetCalculatedVariableDataset, startCol = .anchorColumnPlus, startRow = currentRow)
+          .news = as.data.frame(rep("NEW!",nrow(.subsetCalculatedVariableDataset)-1))
+          openxlsx::writeData(.wbLong, "qualityChecks", .news, startCol = .newColumn, startRow = currentRow+1)
           currentRow <- currentRow + 1
-          openxlsx::writeData(.wbLong, "qualityChecks", as.data.frame(rep("NEW!",nrow(.subsetCalculatedVariableDataset))), startCol = .newColumn, startRow = currentRow)
           openxlsx::addStyle(.wbLong, "qualityChecks", style = bottomBorderStyle, rows = currentRow + nrow(.subsetCalculatedVariableDataset), cols = 1:30)
           currentRow <- currentRow + nrow(.subsetCalculatedVariableDataset) + 2                  
         }
@@ -265,8 +266,9 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
             }
             
             openxlsx::writeData(.wbLong, "qualityChecks", .subsetSiteDataset, startCol = .anchorColumnPlus, startRow = currentRow)
+            .news <- as.data.frame(rep("NEW!",nrow(.subsetSiteDataset)-1))
+            openxlsx::writeData(.wbLong, "qualityChecks", .news, startCol = .newColumn, startRow = currentRow+1)
             currentRow <- currentRow + 1
-            openxlsx::writeData(.wbLong, "qualityChecks", as.data.frame(rep("NEW!",nrow(.subsetSiteDataset))), startCol = .newColumn, startRow = currentRow)
             openxlsx::addStyle(.wbLong, "qualityChecks", style = bottomBorderStyle, rows = currentRow + nrow(.subsetSiteDataset), cols = 1:30)
             currentRow <- currentRow + nrow(.subsetSiteDataset) + 2
           }

@@ -4,15 +4,15 @@
 # # temp_log_file <- registrydqchecks::open_sink()
 # 
 # # Choose from aa, ad, gpp, ibd, ms, nmo, psa, pso, ra, raj
-# .registryAbbreviation <- "gpp"
+# .registryAbbreviation <- "ad"
 # 
 # .dataPullYear <- "2025"
-# .dataPullFolderDate <- "2025-09-05"
-# .dataPullDate <- "2025-09-05"
+# .dataPullFolderDate <- "2025-09-04"
+# .dataPullDate <- "2025-09-04"
 # 
 # .lastMonthDataPullYear <- "2025"
-# .lastMonthDataPullFolderDate <- "2025-08-05"
-# .lastMonthDataPullDate <- "2025-08-05"
+# .lastMonthDataPullFolderDate <- "2025-08-04"
+# .lastMonthDataPullDate <- "2025-08-04"
 # 
 # source("config.R")
 # 
