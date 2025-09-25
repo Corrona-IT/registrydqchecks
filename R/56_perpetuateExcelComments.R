@@ -15,24 +15,30 @@ perpetuateExcelComments <- function(.lastMonthCheckExcelFileUrl
     lastMonthAllChecksExcel <- readxl::read_xlsx(glue::glue("{.lastMonthCheckExcelFileUrl}"), sheet = "qualityChecks")
     thisMonthAllChecksExcel <- readxl::read_xlsx(glue::glue("{.thisMonthCheckExcelFileUrl}"), sheet = "qualityChecks")
     
+    # Look for "anchor" (case-insensitive)
+    last_anchor_index <- which(tolower(lastMonthAllChecksExcel |> names()) == "anchor")
+    last_anchor_name <- paste0("...",last_anchor_index+1)
+    this_anchor_index <- which(tolower(thisMonthAllChecksExcel |> names()) == "anchor")
+    this_anchor_name <- paste0("...",this_anchor_index+1)
+
     # Identify unique check identifiers from last month
     lastMonthDsToWorkWith <- lastMonthAllChecksExcel |>
-      dplyr::filter(substr(`...7`,1,2) %in% c("nc", "rc")) |>
-      dplyr::select(`...7`) |>
+      dplyr::filter(substr(.data[[last_anchor_name]],1,2) %in% c("nc", "rc")) |>
+      dplyr::select(all_of(last_anchor_name)) |>
       dplyr::distinct()
     
     # Identify unique check identifiers from this month
     thisMonthDsToWorkWith <- thisMonthAllChecksExcel |>
-      dplyr::filter(substr(`...7`,1,2) %in% c("nc", "rc")) |>
-      dplyr::select(`...7`) |>
+      dplyr::filter(substr(.data[[this_anchor_name]],1,2) %in% c("nc", "rc")) |>
+      dplyr::select(all_of(this_anchor_name)) |>
       dplyr::distinct()
 
     # Loop through check identifiers
     ### Extract check datasets
     ### Extract investigation items
     ### Create combined dataset with check data and investigation items
-    for(check in lastMonthDsToWorkWith$`...7`){
-      if(check %in% thisMonthDsToWorkWith$`...7`){
+    for(check in lastMonthDsToWorkWith[[last_anchor_name]]){
+      if(check %in% thisMonthDsToWorkWith[[this_anchor_name]]){
         
         thisMonthCheckDs <- data.frame()
         lastMonthCheckDs <- data.frame()
@@ -40,29 +46,29 @@ perpetuateExcelComments <- function(.lastMonthCheckExcelFileUrl
         print(check)
         
         # Extract location of check subdata for this month
-        thisMonthCheckLocMin <- min(which(thisMonthAllChecksExcel$`...7` == check))
-        thisMonthCheckLocMax<- max(which(thisMonthAllChecksExcel$`...7` == check))
+        thisMonthCheckLocMin <- min(which(thisMonthAllChecksExcel[[this_anchor_name]] == check))
+        thisMonthCheckLocMax<- max(which(thisMonthAllChecksExcel[[this_anchor_name]] == check))
         thisMonthCheckLocHeader <- thisMonthCheckLocMin - 1
         
         # Extract the check subdata for this month
         thisMonthCheckDs <- thisMonthAllChecksExcel |>
           dplyr::slice(thisMonthCheckLocHeader:thisMonthCheckLocMax) |>
           dplyr::select(starts_with("...")) |>
-          dplyr::select(-`...6`) |>
+          # dplyr::select(-any_of(anchor)) |>
           janitor::row_to_names(row_number = 1) |>
           janitor::clean_names() |>
           dplyr::select(-dplyr::starts_with("na"))
         
         
         # Extract location of check subdata for last month
-        lastMonthCheckLocMin <- min(which(lastMonthAllChecksExcel$`...7` == check))
-        lastMonthCheckLocMax<- max(which(lastMonthAllChecksExcel$`...7` == check))
+        lastMonthCheckLocMin <- min(which(lastMonthAllChecksExcel[[last_anchor_name]] == check))
+        lastMonthCheckLocMax<- max(which(lastMonthAllChecksExcel[[last_anchor_name]] == check))
         lastMonthCheckLocHeader <- lastMonthCheckLocMin - 1
         
         # Extract the check Investigator subdata for last month
         lastMonthInvestigatorDs <- lastMonthAllChecksExcel |>
           dplyr::slice((lastMonthCheckLocHeader+1):lastMonthCheckLocMax) |>
-          dplyr::select("Investigator",	"Date Investigated",	"Resolution",	"Date Resolved",	"Notes") |>
+          dplyr::select(any_of(c("Investigator",	"Date Investigated",	"Resolution",	"Date Resolved",	"Notes", "NewCheck", "QueryID", "Extra"))) |>
           dplyr::mutate(
             `Investigator` = as.character(`Investigator`)
             ,`Date Investigated` = as.Date(`Date Investigated`, tryFormats = c("%Y-%m-%d", "%Y/%m/%d"), optional = TRUE)
@@ -75,7 +81,7 @@ perpetuateExcelComments <- function(.lastMonthCheckExcelFileUrl
         lastMonthCheckDs <- lastMonthAllChecksExcel |>
           dplyr::slice(lastMonthCheckLocHeader:lastMonthCheckLocMax) |>
           dplyr::select(starts_with("...")) |>
-          dplyr::select(-`...6`) |>
+          # dplyr::select(-any_of(anchor)) |>
           janitor::row_to_names(row_number = 1) |>
           janitor::clean_names() |>
           dplyr::select(-dplyr::starts_with("na"))
@@ -93,12 +99,15 @@ perpetuateExcelComments <- function(.lastMonthCheckExcelFileUrl
         if (length(joinVars) > 0) {
           finalDs <- dplyr::left_join(
             thisMonthFullDs
-            ,lastMonthFullDs
+            ,lastMonthFullDs |> dplyr::mutate(.present = 1L)
             ,by = joinVars
-          )
+          ) |>
+            dplyr::mutate(NewCheck = dplyr::if_else(is.na(.present), "NEW!", "")) |>
+            dplyr::select(-.present)
           
           # Build dataset to print out
-          toPrint <- finalDs[c("Investigator", "Date Investigated", "Resolution", "Date Resolved", "Notes")]
+          toPrint <- finalDs |>
+            dplyr::select(any_of(c("Investigator", "Date Investigated", "Resolution", "Date Resolved", "Notes", "NewCheck", "QueryID", "Extra")))
           
           # Load the Excel file to write information into
           wb = openxlsx::loadWorkbook(glue::glue("{.thisMonthCheckExcelFileUrl}"))
