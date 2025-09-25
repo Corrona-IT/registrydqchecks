@@ -19,9 +19,9 @@
 # # validateCodebook(codebookUrl = .testCodebookUrl[[.registryAbbreviation]]
 # #                   ,datasetNames = .testDataSetsToCheck[[.registryAbbreviation]])
 # 
-# # checks <- readRDS("C:/Users/scott.kreider/Documents/scrap/exampleOutput/aa_2025-07-05_2025-07-21_1442_checks.rds")
-# # manualNcChecks <- checks$nonCriticalChecks
-# manualNcChecks <- NULL
+# checks <- readRDS("C:/Users/scott.kreider/Documents/scrap/exampleOutput/ad_2025-09-04_2025-09-25_1119_checks.rds")
+# manualNcChecks <- checks$nonCriticalChecks
+# # manualNcChecks <- NULL
 # 
 # outputUrl <- runRegistryChecks(.registry = .registryAbbreviation
 #                   ,.prelimDataFolderUrl = .testDataFolderUrl[[.registryAbbreviation]]
@@ -50,13 +50,13 @@
 # .outputUrl = glue::glue("{.reportOutputUrl}/{.registryAbbreviation}/{.dataPullYear}/{.dataPullDate}/")
 # .isR = .testIsR[[.registryAbbreviation]]
 # 
-# .dsName = "GPP_drugevents"
+# .dsName = "exvisit"
 # 
-# copyRomListingToFolder(.reportOutputUrl = outputUrl
-#                        ,.romReportUrl = .exampleRomOutputFolder
-#                        ,.registry = .registryAbbreviation
-#                        ,.dataPullDate = .dataPullDate
-#                        ,.overwrite = FALSE)
+# # copyRomListingToFolder(.reportOutputUrl = outputUrl
+# #                        ,.romReportUrl = .exampleRomOutputFolder
+# #                        ,.registry = .registryAbbreviation
+# #                        ,.dataPullDate = .dataPullDate
+# #                        ,.overwrite = FALSE)
 # 
 # # registrydqchecks::close_sink(temp_log_file = temp_log_file
 # #                              ,registry_abbrev = .registry
