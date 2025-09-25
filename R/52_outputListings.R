@@ -156,6 +156,7 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
   openxlsx::protectWorksheet(.wbLong, sheet = "supporting_details", protect = TRUE, lockFormattingCells = TRUE)
   
   .columnTitles <- as.data.frame(t(c("Investigator", "Date Investigated", "Resolution", "Date Resolved", "Notes", "NewCheck", "QueryID", "Extra")))
+  .queryIdColumn <- which(tolower(.columnTitles) == "queryid")
   .anchorColumn <- ncol(.columnTitles) + 1
   .anchorColumnPlus <- .anchorColumn + 1
   
@@ -206,6 +207,7 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
           currentRow <- currentRow + 1
           openxlsx::addStyle(.wbLong, "qualityChecks", style = topBorderStyle, rows = currentRow, cols = 1:30)
           openxlsx::writeData(.wbLong, "qualityChecks", .subsetCalculatedVariableDataset, startCol = .anchorColumnPlus, startRow = currentRow)
+          openxlsx::writeData(.wbLong, "qualityChecks", "NEW!", startCol = .queryIdColumn, startRow = currentRow)
           currentRow <- currentRow + 1
           openxlsx::addStyle(.wbLong, "qualityChecks", style = bottomBorderStyle, rows = currentRow + nrow(.subsetCalculatedVariableDataset), cols = 1:30)
           currentRow <- currentRow + nrow(.subsetCalculatedVariableDataset) + 2                  
@@ -263,6 +265,7 @@ outputListings <- function(.registry, .listingUrl, .yearMonthTimestamp, .dataPul
             }
             
             openxlsx::writeData(.wbLong, "qualityChecks", .subsetSiteDataset, startCol = .anchorColumnPlus, startRow = currentRow)
+            openxlsx::writeData(.wbLong, "qualityChecks", "NEW!", startCol = .queryIdColumn, startRow = currentRow)
             currentRow <- currentRow + 1
             openxlsx::addStyle(.wbLong, "qualityChecks", style = bottomBorderStyle, rows = currentRow + nrow(.subsetSiteDataset), cols = 1:30)
             currentRow <- currentRow + nrow(.subsetSiteDataset) + 2
