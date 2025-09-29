@@ -49,12 +49,6 @@ runRegistryChecks <- function(.registry = "defaultRegistry"
 
   ############################
   # Initialize variable lists to house information on specific datasets being checked
-  .codebooks <- list()
-  .dataToCheck <- list()
-  .dataToCompare <- list()
-  .essentialVariables <- list()
-  .codebookVariables <- list()
-  .uniqueKeys <- list()
   .critCheckOutput <- list()
   .codebookNcOutput <- list()
   .nonCritCheckOutput <- list()
@@ -89,21 +83,10 @@ runRegistryChecks <- function(.registry = "defaultRegistry"
     # Pull data to check and data from last month to compare it to
     .dataToCheck <- pullData(.datasetUrl = glue::glue("{.prelimDataFolderUrl}{.dsName}_{.prelimDataPullDate}")
                                         ,.isR)
-    # |> cleanUniqueKeyClasses(uniqueKeyVars = .uniqueKeys)
     
     .dataToCompare <- pullData(.datasetUrl = glue::glue("{.lastMonthDataFolderUrl}{.dsName}_{.lastMonthDataPullDate}")
                                           ,.isR)
-    # |> cleanUniqueKeyClasses(uniqueKeyVars = .uniqueKeys)
 
-    # # Run data_changes report
-    # data_changes_report <- data_changes(
-    #   curr_dataset = .dataToCheck
-    #   ,comp_dataset = .dataToCompare
-    #   ,by_vars = .uniqueKeys |> dplyr::pull()
-    #   ,output_folder = .reportOutputUrl
-    #   ,output_filename = glue::glue("{.dsName}_data_comparison.xlsx")
-    #   ,title_pagename = .dsName)
-    
     # Pull the list of essential variables for the specific dataset from the codebook
     .essentialVariables <- .codebooks |>
       dplyr::filter(essential == 1) |>
