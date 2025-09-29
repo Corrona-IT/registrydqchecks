@@ -88,12 +88,12 @@ runRegistryChecks <- function(.registry = "defaultRegistry"
     
     # Pull data to check and data from last month to compare it to
     .dataToCheck <- pullData(.datasetUrl = glue::glue("{.prelimDataFolderUrl}{.dsName}_{.prelimDataPullDate}")
-                                        ,.isR) |>
-      cleanUniqueKeyClasses(uniqueKeyVars = .uniqueKeys)
+                                        ,.isR)
+    # |> cleanUniqueKeyClasses(uniqueKeyVars = .uniqueKeys)
     
     .dataToCompare <- pullData(.datasetUrl = glue::glue("{.lastMonthDataFolderUrl}{.dsName}_{.lastMonthDataPullDate}")
-                                          ,.isR) |>
-      cleanUniqueKeyClasses(uniqueKeyVars = .uniqueKeys)
+                                          ,.isR)
+    # |> cleanUniqueKeyClasses(uniqueKeyVars = .uniqueKeys)
 
     # # Run data_changes report
     # data_changes_report <- data_changes(
