@@ -34,8 +34,8 @@ checkForValidAgeAtEnrollment <- function(.dsName
     ,"pass" = ifelse(nrow(.ccCheck10Output) > 0, FALSE, TRUE)
     ,"values" = list(
       "n" = nrow(.ccCheck10Output)
-      ,"N" = NA
-      ,"pct" = NA
+      ,"N" = nrow(.dsToCheck)
+      ,"pct" = nrow(.ccCheck10Output) / nrow(.dsToCheck)
     )
     ,"listing" = .ccCheck10Output
   )

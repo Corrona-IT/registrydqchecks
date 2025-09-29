@@ -97,7 +97,8 @@ runRegistryChecks <- function(.registry = "defaultRegistry"
       dplyr::select(varName, varLabel, essential, calculatedVariable, acceptableMissingness, missingnessThresholdMultiplier, skipLogic, catValues, numRange)
     
     # Run the critical checks on the specific dataset with information pulled from the codebook
-    .critCheckOutput[[.dsName]] <- criticalChecks(.dsToCheck = data.frame(.dataToCheck)
+    .critCheckOutput[[.dsName]] <- criticalChecks(
+                                                   .dsToCheck = data.frame(.dataToCheck)
                                                   ,.compDsToCheck = data.frame(.dataToCompare)
                                                   ,.listOfEssentialVars = .essentialVariables
                                                   ,.listOfSupposedVars = names(.dataToCompare)
@@ -108,7 +109,8 @@ runRegistryChecks <- function(.registry = "defaultRegistry"
 
     
     # Run the codebook noncritical checks on the specific dataset with information pulled from the codebook
-    .codebookNcOutput[[.dsName]] <- codebookNcChecks(.dsName = .dsName
+    .codebookNcOutput[[.dsName]] <- codebookNcChecks(
+                                                      .dsName = .dsName
                                                      ,.dsToCheck = data.frame(.dataToCheck)
                                                      ,.compDsToCheck = data.frame(.dataToCompare)
                                                      ,.codebookVariables = .codebookVariables

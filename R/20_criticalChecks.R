@@ -22,20 +22,39 @@ criticalChecks <- function(.dsToCheck
   .critCheckResults2 <- checkForOmittedVariables(.dsToCheck,.listOfSupposedVars)
   .critCheckResults3 <- checkForExtraVariables(.dsToCheck,.listOfSupposedVars)
   .critCheckResults4 <- checkForMissingVariableLabels(.dsToCheck)
-  .critCheckResults5 <- checkForAddedRows(.dsToCheck,.compDsToCheck)
-  .critCheckResults6 <- checkForRemovedRows(.dsToCheck = .dsToCheck,.compDsToCheck = .compDsToCheck,.uniqueKey = .uniqueKeys)
+  .critCheckResults5 <- checkForAddedRows(
+                                           .dsToCheck = .dsToCheck
+                                          ,.compDsToCheck = .compDsToCheck
+                                          )
+  .critCheckResults6 <- checkForRemovedRows(
+                                             .dsToCheck = .dsToCheck
+                                            ,.compDsToCheck = .compDsToCheck
+                                            ,.uniqueKey = .uniqueKeys
+                                            )
 
   # Checks if a codebook exists and if not then does not run CC 7 and 8
   if(length(.listOfEssentialVars) > 0){
-    .critCheckResults7 <- checkForGivenItemsNonresponse(.dsToCheck,.listOfEssentialVars)
-    .critCheckResults8 <- checkForMonthlyMissingness(.dsToCheck,.compDsToCheck,.listOfEssentialVars)  
+    .critCheckResults7 <- checkForGivenItemsNonresponse(
+                                                         .dsToCheck = .dsToCheck
+                                                        ,.listOfEssentialVars = .listOfEssentialVars
+                                                        )
+    .critCheckResults8 <- checkForMonthlyMissingness(
+                                                      .dsToCheck = .dsToCheck
+                                                     ,.compDsToCheck = .compDsToCheck
+                                                     ,.listOfEssentialVars = .listOfEssentialVars
+                                                     )  
   } else {
     .critCheckResults7 <- NULL
     .critCheckResults8 <- NULL
   }
   
   .critCheckResults9 <- checkForVariableTypes(.dsToCheck,.codebookVariables)
-  .critCheckResults10 <- checkForValidAgeAtEnrollment(.dsName,.dsToCheck,.codebookVariables,.uniqueKeys)
+  .critCheckResults10 <- checkForValidAgeAtEnrollment(
+                                                       .dsName = .dsName
+                                                      ,.dsToCheck = .dsToCheck
+                                                      ,.codebookVariables = .codebookVariables
+                                                      ,.uniqueKeys = .uniqueKeys
+                                                      )
   
   
   # Returns a list with each element being one of the check results

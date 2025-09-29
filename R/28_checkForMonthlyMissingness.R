@@ -114,6 +114,7 @@ checkForMonthlyMissingness <- function(.dsToCheck, .compDsToCheck, .listOfEssent
     ,"checkShortDescription" = "month to month missingness"
     ,"sendCheckToRom" = FALSE
     ,"pass" = ifelse(nrow(.listOfVarMissingness) > 0, FALSE, TRUE)
+    ,"numberOfMissingVariables" = nrow(.listOfVarMissingness)
     ,"essentialVariablesMissingness" = .listOfVarMissingness
   )
   

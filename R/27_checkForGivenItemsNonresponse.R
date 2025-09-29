@@ -83,6 +83,7 @@ checkForGivenItemsNonresponse <- function(.dsToCheck, .listOfEssentialVars){
     ,"checkShortDescription" = "item missingness"
     ,"sendCheckToRom" = FALSE
     ,"pass" = ifelse(nrow(.listOfVarMissingness) > 0, FALSE, TRUE)
+    ,"numberOfMissingVariables" = nrow(.listOfVarMissingness)
     ,"essentialVariablesMissingness" = .listOfVarMissingness
   )
   

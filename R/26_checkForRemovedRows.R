@@ -23,7 +23,7 @@ checkForRemovedRows <- function(.dsToCheck,.compDsToCheck,.uniqueKey){
   
   rm(.tempDsToCheck, .tempCompDsToCheck)
   
-  .pctRemoved <- nrow(.inOldAndNotInNew) / nrow(.compDsToCheck)
+  .propRemoved <- nrow(.inOldAndNotInNew) / nrow(.compDsToCheck)
   
   .threshold <- 2
 
@@ -35,10 +35,13 @@ checkForRemovedRows <- function(.dsToCheck,.compDsToCheck,.uniqueKey){
     ,"checkShortDescription" = "removed rows"
     ,"sendCheckToRom" = FALSE
     ,"threshold" = sprintf("%.2f%%",.threshold)
-    ,"pass" = ifelse(.pctRemoved > 0.02, FALSE, TRUE)
-    ,"nRemovedRows" = glue::glue("{nrow(.inOldAndNotInNew)} ({sprintf('%.2f%%',.pctRemoved*100)})")
+    ,"pass" = ifelse(.propRemoved > 0.02, FALSE, TRUE)
+    ,"nRemovedRows" = nrow(.inOldAndNotInNew)
+    ,"propRemovedRows" = .propRemoved
+    ,"pctRemovedRows" = .propRemoved*100
+    ,"textRemovedRows" = glue::glue("{nrow(.inOldAndNotInNew)} ({sprintf('%.2f%%',.propRemoved*100)})")
     ,"nRowsThisMonth" = nrow(.dsToCheck)
-    ,"nOldRows" = nrow(.compDsToCheck)
+    ,"nRowsLastMonth" = nrow(.compDsToCheck)
     ,"inOldAndNotInNew" = as.data.frame(.inOldAndNotInNew[,.uniqueKeys])
   )
 
